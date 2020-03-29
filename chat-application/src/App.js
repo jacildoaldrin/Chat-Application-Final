@@ -3,8 +3,8 @@ import { BrowserRouter as Router, Route } from "react-router-dom";
 import Login from "./components/Login/Login";
 import Chatroom from "./components/Chatroom/Chatroom";
 import Join from "./components/Join/Join";
-import 'bootstrap/dist/css/bootstrap.min.css';
 import Admin from "./components/Admin/Admin";
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 const App = () => {
   return (

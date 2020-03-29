@@ -1,11 +1,24 @@
-import React, {useState} from "react";
-import { Link } from 'react-router-dom';
+import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
+import axios from "axios";
 import "./Login.css";
 
-const Login = () => {
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
+const port = process.env.port || 5000;
+const endpoint = `https://localhost:${port}/user/login`;
 
+const Login = () => {
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [condition, setCondition] = useState(Boolean);
+
+  useEffect(() => {
+    axios
+      .post(`${endpoint}`, { username: username, password: password })
+      .then(res => {
+        console.log(res.data);
+      });
+    // setCondition(username == "admin" && password == "password");
+  });
 
   return (
     <section id="loginCover" className="min-vh-100">
@@ -19,14 +32,32 @@ const Login = () => {
                   <div className="justify-content-center">
                     <form className="form-group">
                       <div className="form-group">
-                        <input className="form-control" type="text" placeholder="Username" onChange={event => setUsername(event.target.value)} required/>
+                        <input
+                          className="form-control"
+                          type="text"
+                          placeholder="Username"
+                          onChange={event => setUsername(event.target.value)}
+                          required
+                        />
                       </div>
                       <div className="form-group">
-                        <input className="form-control" type="text" placeholder="Password" onChange={event => setPassword(event.target.value)} required/>
+                        <input
+                          className="form-control"
+                          type="text"
+                          placeholder="Password"
+                          onChange={event => setPassword(event.target.value)}
+                          required
+                        />
                       </div>
-                      <Link onClick={event => (username!='admin' && password !='admin')?event.preventDefault() : null} to={'/admin'}>
-                        <button type="submit" className="btn btn-primary btn-lg full-width">Submit</button>
-                      </Link>
+                      <button
+                        onClick={event =>
+                          !condition ? event.preventDefault() : null
+                        }
+                        type="submit"
+                        className="btn btn-primary btn-lg full-width"
+                      >
+                        Submit
+                      </button>
                     </form>
                   </div>
                 </div>
