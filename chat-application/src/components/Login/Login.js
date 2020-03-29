@@ -1,35 +1,32 @@
 import React, { useState, useEffect } from "react";
-// import { Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 import axios from "axios";
 
 import "./Login.css";
 
-// const port = process.env.port || 5000;
 // const endpoint = `http://localhost:5000/user/login`; -> LOCAL ENDPOINT
 // const endpoint = 'https://chat-application-backend.herokuapp.com/';
 
 const Login = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  // const [condition, setCondition] = useState(Boolean);
-
-  const handleSubmit = event => {
-    console.log(`${username} - ${password}`);
-    event.preventDefault();
-    axios
-      .post("http://localhost:5000/user/login", { username: username, password: password }, {
-        headers: {
-          'Content-Type': 'application/json'
-        }
-      })
-      .then(res => {
-        console.log(res);
-      });
-  };
+  const [condition, setCondition] = useState(Boolean);
 
   useEffect(() => {
-    // setCondition((username == "admin" && password == "password"))
-  });
+    axios
+      .post(
+        "http://localhost:5000/user/login",
+        { username: username, password: password },
+        {
+          headers: {
+            "Content-Type": "application/json"
+          }
+        }
+      )
+      .then(res => {
+        setCondition(res.data[0] != null)
+      });
+  }, [username, password]);
 
   return (
     <section id="loginCover" className="min-vh-100">
@@ -41,7 +38,7 @@ const Login = () => {
                 <h1 className="display-4 py-2">Admin Login</h1>
                 <div>
                   <div className="justify-content-center">
-                    <form className="form-group" onSubmit={handleSubmit}>
+                    <form className="form-group">
                       <div className="form-group">
                         <input
                           className="form-control"
@@ -60,12 +57,14 @@ const Login = () => {
                           required
                         />
                       </div>
+                      <Link onClick={event => !condition?event.preventDefault():null} to={'/admin'}>
                       <button
                         type="submit"
                         className="btn btn-primary btn-lg full-width"
                       >
                         Submit
                       </button>
+                      </Link>
                     </form>
                   </div>
                 </div>
