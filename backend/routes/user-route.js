@@ -4,11 +4,11 @@ const User = require('../models/User');
 
 // Get User
 router.route('/login').post((req, res) => {
-    User.find({ username: req.body.username}, (error, data) => {
+    User.find({ username: req.body.username, password: req.body.password}, (error, data) => {
         if (error) {
-            return next(error)
+            return next(error);
         } else {
-            return res.json(data)
+            return res.json(data);
         }
     });
 });

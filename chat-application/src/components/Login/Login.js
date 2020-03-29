@@ -1,23 +1,34 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+// import { Link } from "react-router-dom";
 import axios from "axios";
+
 import "./Login.css";
 
-const port = process.env.port || 5000;
-const endpoint = `https://localhost:${port}/user/login`;
+// const port = process.env.port || 5000;
+// const endpoint = `http://localhost:5000/user/login`; -> LOCAL ENDPOINT
+// const endpoint = 'https://chat-application-backend.herokuapp.com/';
 
 const Login = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [condition, setCondition] = useState(Boolean);
+  // const [condition, setCondition] = useState(Boolean);
+
+  const handleSubmit = event => {
+    console.log(`${username} - ${password}`);
+    event.preventDefault();
+    axios
+      .post("http://localhost:5000/user/login", { username: username, password: password }, {
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      })
+      .then(res => {
+        console.log(res);
+      });
+  };
 
   useEffect(() => {
-    axios
-      .post(`${endpoint}`, { username: username, password: password })
-      .then(res => {
-        console.log(res.data);
-      });
-    // setCondition(username == "admin" && password == "password");
+    // setCondition((username == "admin" && password == "password"))
   });
 
   return (
@@ -30,7 +41,7 @@ const Login = () => {
                 <h1 className="display-4 py-2">Admin Login</h1>
                 <div>
                   <div className="justify-content-center">
-                    <form className="form-group">
+                    <form className="form-group" onSubmit={handleSubmit}>
                       <div className="form-group">
                         <input
                           className="form-control"
@@ -43,16 +54,13 @@ const Login = () => {
                       <div className="form-group">
                         <input
                           className="form-control"
-                          type="text"
+                          type="password"
                           placeholder="Password"
                           onChange={event => setPassword(event.target.value)}
                           required
                         />
                       </div>
                       <button
-                        onClick={event =>
-                          !condition ? event.preventDefault() : null
-                        }
                         type="submit"
                         className="btn btn-primary btn-lg full-width"
                       >
