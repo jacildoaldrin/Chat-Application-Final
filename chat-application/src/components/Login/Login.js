@@ -1,7 +1,12 @@
-import React from "react";
+import React, {useState} from "react";
+import { Link } from 'react-router-dom';
 import "./Login.css";
 
 const Login = () => {
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+
+
   return (
     <section id="loginCover" className="min-vh-100">
       <div id="cover-caption">
@@ -14,12 +19,14 @@ const Login = () => {
                   <div className="justify-content-center">
                     <form className="form-group">
                       <div className="form-group">
-                        <input className="form-control" type="text" placeholder="Username" required/>
+                        <input className="form-control" type="text" placeholder="Username" onChange={event => setUsername(event.target.value)} required/>
                       </div>
                       <div className="form-group">
-                        <input className="form-control" type="text" placeholder="Password" required/>
+                        <input className="form-control" type="text" placeholder="Password" onChange={event => setPassword(event.target.value)} required/>
                       </div>
-                      <button type="submit" className="btn btn-primary btn-lg full-width">Submit</button>
+                      <Link onClick={event => (username!='admin' && password !='admin')?event.preventDefault() : null} to={'/admin'}>
+                        <button type="submit" className="btn btn-primary btn-lg full-width">Submit</button>
+                      </Link>
                     </form>
                   </div>
                 </div>
