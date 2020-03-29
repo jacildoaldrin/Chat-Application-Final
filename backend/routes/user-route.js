@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const User = require('../models/User');
+const jwt = require('jsonwebtoken');
 
 // Get User
 router.route('/login').post((req, res) => {
@@ -8,7 +9,14 @@ router.route('/login').post((req, res) => {
         if (error) {
             return next(error);
         } else {
-            return res.json(data);
+            let payload = {
+                name: data.username
+              }
+            //let token = jwt.sign(payload, 'mySecret');
+            //data.token = token;
+            //res.status(200).send({token});
+            res.json(data);
+            //console.log(data);
         }
     });
 });

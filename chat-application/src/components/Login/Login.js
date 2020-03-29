@@ -24,6 +24,7 @@ const Login = () => {
         }
       )
       .then(res => {
+        //localStorage.setItem('token', res.data.token);
         setCondition(res.data[0] != null)
       });
   }, [username, password]);
