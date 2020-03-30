@@ -25,7 +25,6 @@ app.use((req, res, next) => {
   next();
 });
 
-
 //body-parser
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
@@ -37,10 +36,12 @@ app.use(cors());
 const messageRoute = require("./routes/message-route");
 const logRoute = require("./routes/log-route");
 const userRoute = require("./routes/user-route");
+const roomRoute = require("./routes/room-route");
 
 app.use("/message", messageRoute);
 app.use("/log", logRoute);
 app.use("/user", userRoute);
+app.use("/room", roomRoute);
 
 const users = {};
 
