@@ -20,6 +20,7 @@ const mongoose = require("mongoose");
 const Message = require("./models/Message");
 const Log = require("./models/Log");
 
+//SSL ERROR FIX
 app.use((req, res, next) => {
   res.setHeader('Access-Control-Allow-Origin', '*');
   next();
@@ -30,6 +31,8 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
   extended: true
 }));
+
+//CORS
 app.use(cors());
 
 // routes
