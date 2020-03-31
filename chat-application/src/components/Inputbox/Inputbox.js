@@ -1,19 +1,19 @@
 import React from "react";
+import './Inputbox.css';
 
-const Inputbox = ({message, sendMessage, setMessage, userTyping}) => {
+const Inputbox = ({ message, sendMessage, setMessage }) => {
   
   return (
-    <div>
-      <form onSubmit={event => !message ? event.preventDefault(): sendMessage(event)}>
+      <form  id="form" onSubmit={event => !message ? event.preventDefault(): sendMessage(event)}>
         <input
+          id="input"
           type="text"
           value={message}
-          onChange={event => {setMessage(event.target.value); userTyping(event)}}
+          onChange={event => {setMessage(event.target.value);}}
         />
-        <button type="submit">Send</button>
+        <button id="sendButton" type="submit"><i className="material-icons">send</i></button>
       </form>
-      <br />
-    </div>
+
   );
 };
 
