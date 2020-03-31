@@ -4,6 +4,9 @@ const bodyParser = require("body-parser");
 const cors = require("cors");
 const port = process.env.PORT || 5000;
 
+//axios
+const axios = require('axios');
+
 const app = express();
 const server = app.listen(port, () => {
   console.log(`Server started on port: ${port}`);
@@ -52,6 +55,7 @@ io.on("connection", socket => {
   socket.on("new-user", data => {
     users[socket.id].username = data.username;
     users[socket.id].room = data.room;
+    logConnectToApp(data.username,data.room)
     io.to(users[socket.id].room).emit("chat-message", {username: "System", message: `${users[socket.id].username} joined the room!`})
     socket.join(users[socket.id].room);
   });
@@ -91,3 +95,30 @@ io.on("connection", socket => {
     callback();
   });
 });
+
+
+
+
+//func logs
+const logConnectToApp = (username, room) => {
+  //Get Current Date and Time
+  var date = Date(Date.now());
+  var dateStringify = date.toString();
+
+  //Event Log
+  axios.post(
+    "http://localhost:5000/event/create-event",
+    {
+      user: username,
+      room: room,
+      type: "socket",
+      description: "connected to Chat App",
+      date: dateStringify
+    },
+    {
+      headers: {
+        "Content-Type": "application/json"
+      }
+    }
+  );
+};
