@@ -46,20 +46,23 @@ app.use("/room", roomRoute);
 const users = {};
 
 io.on("connection", socket => {
-  console.log(`new socket created with id ${socket.id}`);
+  // console.log(`new socket created with id ${socket.id}`);
   users[socket.id] = { username: null, room: null };
 
   socket.on("new-user", data => {
     users[socket.id].username = data.username;
     users[socket.id].room = data.room;
+    io.to(users[socket.id].room).emit("chat-message", {username: "System", message: `${users[socket.id].username} joined the room!`})
     socket.join(users[socket.id].room);
-    console.log(users[socket.id])
+  });
+
+  socket.on("user-typing", data => {
+    io.to(users[socket.id].room).emit("typing", {username: users[socket.id].username, typing: data});
   });
 
   socket.on("join-room", room => {
     users[socket.id].room = room;
     socket.join(room);
-    console.log(`${users[socket.id].username} joined ${room}.`);
   });
 
   socket.on("leave-room", room => {
@@ -69,19 +72,22 @@ io.on("connection", socket => {
 
   socket.on("disconnect", () => {
     if (users[socket.id].room != null) {
-      socket.to(users[socket.id].room).emit("user-disconnected", users[socket.id]);
-      delete users[socket.id];
+      io.to(users[socket.id].room).emit("chat-message", {
+        username: "System",
+        message: `${users[socket.id].username} has disconnected.`
+      });
     } else {
       delete users[socket.id];
     }
-    console.log("user has left!");
+    delete users[socket.id];
   });
 
-  socket.on("send-message", (message) => {
+  socket.on("send-message", (message, callback) => {
     const username = users[socket.id].username;
     io.to(users[socket.id].room).emit("chat-message", {
       username: username,
       message: message
     });
+    callback();
   });
 });
