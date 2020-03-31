@@ -4,6 +4,9 @@ const bodyParser = require("body-parser");
 const cors = require("cors");
 const port = process.env.PORT || 5000;
 
+//axios
+const axios = require('axios');
+
 const app = express();
 const server = app.listen(port, () => {
   console.log(`Server started on port: ${port}`);
