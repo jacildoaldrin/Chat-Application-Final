@@ -8,6 +8,7 @@ import "./Chatroom.css";
 // components
 import Inputbox from "../Inputbox/Inputbox";
 import Chatbox from "../Chatbox/Chatbox";
+import axios from "axios";
 
 const port = process.env.port || 5000;
 const endpoint = `localhost:${port}`;
@@ -19,6 +20,29 @@ const Chat = ({ location }) => {
   const [room, setRoom] = useState("");
   const [message, setMessage] = useState("");
   const [messages, setMessages] = useState([]);
+
+  const logConnectToApp = (username, room) => {
+    //Get Current Date and Time
+    var date = Date(Date.now());
+    var dateStringify = date.toString();
+
+    //Event Log
+    axios.post(
+      "http://localhost:5000/event/create-event",
+      {
+        user: username,
+        room: room,
+        type: "socket",
+        description: "connected to Chat App",
+        date: dateStringify
+      },
+      {
+        headers: {
+          "Content-Type": "application/json"
+        }
+      }
+    );
+  };
 
   useEffect(() => {
     const { username } = queryString.parse(location.search);
