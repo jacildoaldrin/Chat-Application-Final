@@ -13,12 +13,7 @@ const io = socketio(server);
 
 // database
 const connect = require("./database/db");
-
 const mongoose = require("mongoose");
-
-// models
-const Message = require("./models/Message");
-const Log = require("./models/Log");
 
 //SSL ERROR FIX
 app.use((req, res, next) => {
@@ -32,17 +27,17 @@ app.use(bodyParser.urlencoded({
   extended: true
 }));
 
-//CORS
+// CORS
 app.use(cors());
 
 // routes
 const messageRoute = require("./routes/message-route");
-const logRoute = require("./routes/log-route");
+const eventRoute = require("./routes/event-route");
 const userRoute = require("./routes/user-route");
 const roomRoute = require("./routes/room-route");
 
 app.use("/message", messageRoute);
-app.use("/log", logRoute);
+app.use("/event", eventRoute);
 app.use("/user", userRoute);
 app.use("/room", roomRoute);
 

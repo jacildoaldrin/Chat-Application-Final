@@ -1,10 +1,10 @@
 const express = require('express');
 const router = express.Router();
-const Log = require('../models/Log');
+const Event = require('../models/Event');
 
-// Add Log
-router.route('/add-log').post((req, res, next) => {
-    Log.create(req.body, (err, data) => {
+// Records an event
+router.route('/create-event').post((req, res, next) => {
+    Event.create(req.body, (err, data) => {
         if (err) {
             return next(err);
         } else {
@@ -13,9 +13,9 @@ router.route('/add-log').post((req, res, next) => {
     });
 });
 
-// Get All Logs
-router.route('/eventlog').get((req, res) => {
-    Log.find((err, data) => {
+// Get All Events
+router.route('/event-history').get((req, res) => {
+    Event.find((err, data) => {
         if (err) {
             return next(err);
         } else {

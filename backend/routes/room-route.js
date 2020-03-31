@@ -14,7 +14,7 @@ router.route('/create-room').post((req, res, next) => {
 });
 
 // Get All Rooms
-router.route('/get-rooms').get((req, res) => {
+router.route('/room-list').get((req, res) => {
     Room.find((err, data) => {
         if (err) {
             return next(err);
@@ -25,7 +25,7 @@ router.route('/get-rooms').get((req, res) => {
 });
 
 //getMessageBasedRoom
-router.route('/roomhistory').post((req, res) => {
+router.route('/room-history').post((req, res) => {
     Message.find({ room: req.body.roomname }, (error, data) => {
         if (error) {
             return next(error)
