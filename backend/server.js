@@ -4,8 +4,8 @@ const bodyParser = require("body-parser");
 const cors = require("cors");
 const port = process.env.PORT || 5000;
 
-//axios
-const axios = require("axios");
+//Logs
+const logs = require("./functions/logs");
 
 const app = express();
 const server = app.listen(port, () => {
@@ -55,7 +55,7 @@ io.on("connection", socket => {
   socket.on("new-user", data => {
     users[socket.id].username = data.username;
     users[socket.id].room = data.room;
-    logConnectToApp(data.username, data.room);
+    logs.logConnectToApp(users[socket.id].username, users[socket.id].room);
     io.to(users[socket.id].room).emit("chat-message", {
       username: "System",
       message: `${users[socket.id].username} joined the room!`
@@ -64,6 +64,7 @@ io.on("connection", socket => {
   });
 
   socket.on("user-typing", data => {
+    //No logs needed for this
     io.to(users[socket.id].room).emit("typing", {
       username: users[socket.id].username,
       typing: data
@@ -71,17 +72,20 @@ io.on("connection", socket => {
   });
 
   socket.on("join-room", room => {
+    logs.logJoinRoom(users[socket.id].username, users[socket.id].room);
     users[socket.id].room = room;
     socket.join(room);
   });
 
   socket.on("leave-room", room => {
+    logs.logLeftRoom(users[socket.id].username, users[socket.id].room);
     socket.to(room).emit("user-disconnected", users[socket.id]);
     socket.leave(room);
   });
 
   socket.on("disconnect", () => {
     if (users[socket.id].room != null) {
+      logs.logDisconnectToApp(users[socket.id].username, users[socket.id].room);
       io.to(users[socket.id].room).emit("chat-message", {
         username: "System",
         message: `${users[socket.id].username} has disconnected.`
@@ -98,29 +102,11 @@ io.on("connection", socket => {
       username: username,
       message: message
     });
+    callback();
+    logs.logMessageSent(
+      users[socket.id].username,
+      users[socket.id].room,
+      message
+    );
   });
 });
-
-//func logs
-const logConnectToApp = (username, room) => {
-  //Get Current Date and Time
-  var date = Date(Date.now());
-  var dateStringify = date.toString();
-
-  //Event Log
-  axios.post(
-    "http://localhost:5000/event/create-event",
-    {
-      user: username,
-      room: room,
-      type: "socket",
-      description: "connected to Chat App",
-      date: dateStringify
-    },
-    {
-      headers: {
-        "Content-Type": "application/json"
-      }
-    }
-  );
-};
