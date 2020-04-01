@@ -7,13 +7,13 @@ class AdminTabs extends React.Component {
   render() {
     return (
       <Tabs defaultActiveKey="profile" id="uncontrolled-tab-example">
-        <Tab eventKey="home" title="Home">
+        <Tab eventKey="eventHistory" title="Event History">
           <AdminEvents/>
         </Tab>
-        <Tab eventKey="profile" title="Profile">
+        <Tab eventKey="messageHistory" title="Message History">
           <p>Message History Here</p>
         </Tab>
-        <Tab eventKey="contact" title="Contact">
+        <Tab eventKey="rooms" title="Rooms">
           <p>Rooms Here</p>
         </Tab>
       </Tabs>

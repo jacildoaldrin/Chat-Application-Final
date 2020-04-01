@@ -14,10 +14,6 @@ const server = app.listen(port, () => {
 
 const io = socketio(server);
 
-// database
-const connect = require("./database/db");
-const mongoose = require("mongoose");
-
 //SSL ERROR FIX
 app.use((req, res, next) => {
   res.setHeader("Access-Control-Allow-Origin", "*");
@@ -102,7 +98,7 @@ io.on("connection", socket => {
       username: username,
       message: message
     });
-    callback();
+    //callback();
     logs.logMessageSent(
       users[socket.id].username,
       users[socket.id].room,
