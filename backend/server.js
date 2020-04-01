@@ -5,7 +5,7 @@ const cors = require("cors");
 const port = process.env.PORT || 5000;
 
 //axios
-const axios = require('axios');
+const axios = require("axios");
 
 const app = express();
 const server = app.listen(port, () => {
@@ -55,13 +55,19 @@ io.on("connection", socket => {
   socket.on("new-user", data => {
     users[socket.id].username = data.username;
     users[socket.id].room = data.room;
-    logConnectToApp(data.username,data.room)
-    io.to(users[socket.id].room).emit("chat-message", {username: "System", message: `${users[socket.id].username} joined the room!`})
+    logConnectToApp(data.username, data.room);
+    io.to(users[socket.id].room).emit("chat-message", {
+      username: "System",
+      message: `${users[socket.id].username} joined the room!`
+    });
     socket.join(users[socket.id].room);
   });
 
   socket.on("user-typing", data => {
-    io.to(users[socket.id].room).emit("typing", {username: users[socket.id].username, typing: data});
+    io.to(users[socket.id].room).emit("typing", {
+      username: users[socket.id].username,
+      typing: data
+    });
   });
 
   socket.on("join-room", room => {
@@ -86,18 +92,14 @@ io.on("connection", socket => {
     delete users[socket.id];
   });
 
-  socket.on("send-message", (message, callback) => {
+  socket.on("send-message", message => {
     const username = users[socket.id].username;
     io.to(users[socket.id].room).emit("chat-message", {
       username: username,
       message: message
     });
-    callback();
   });
 });
-
-
-
 
 //func logs
 const logConnectToApp = (username, room) => {

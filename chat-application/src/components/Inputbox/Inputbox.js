@@ -13,7 +13,6 @@ const Inputbox = ({ message, sendMessage, setMessage }) => {
         />
         <button id="sendButton" type="submit"><i className="material-icons">send</i></button>
       </form>
-
   );
 };
 
