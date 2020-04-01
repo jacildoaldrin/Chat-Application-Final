@@ -7,7 +7,7 @@ const messageSchema = mongoose.Schema(
     message: String,
     room: String,
     type: String,
-    datetime: Date
+    date: Date
   },
   {
       collection: 'messages'

@@ -4,12 +4,12 @@ import axios from 'axios';
 import Moment from 'moment';
 
 
-class AdminEvents extends React.Component {
+class AdminMessages extends React.Component {
   constructor(props) {
     super(props);
     this.wrapper = React.createRef();
     this.state = {
-      events: []
+      myMessages: []
     };
   }
 
@@ -18,24 +18,24 @@ class AdminEvents extends React.Component {
   }
 
   fetchEvents() {
-      axios.get("http://localhost:5000/event/event-history").then( res => {
+      axios.get("http://localhost:5000/message/message-history").then( res => {
         //this.state.events = res.data;
         this.setState({
-            events: res.data
+            myMessages: res.data
         });
         //console.log(res.data);
       });
   }
 
   renderTableData() {
-    return this.state.events.map((event, index) => {
-      const { _id, user, room, type, description, date } = event; //destructuring
+    return this.state.myMessages.map((myMessage, index) => {
+      const { _id, sender, room, message, type, date } = myMessage; //destructuring
       return (
         <tr key={_id}>
-          <td>{user}</td>
+          <td>{sender}</td>
           <td>{room}</td>
+          <td>{message}</td>
           <td>{type}</td>
-          <td>{description}</td>
           <td>{Moment(new Date(date)).format("YYYY-MM-DD")}</td>
           <td>{Moment(new Date(date)).format("hh:mm:ss")}</td>
         </tr>
@@ -49,10 +49,10 @@ class AdminEvents extends React.Component {
         <Table striped bordered hover variant="dark" id="students">
         <thead>
     <tr>
-      <th>User</th>
-      <th>Type</th>
+      <th>Sender</th>
       <th>Room</th>
-      <th>Description</th>
+      <th>Message</th>
+      <th>Type</th>
       <th>Date</th>
       <th>Time</th>
     </tr>
@@ -64,4 +64,4 @@ class AdminEvents extends React.Component {
   }
 }
 
-export default AdminEvents;
+export default AdminMessages;
