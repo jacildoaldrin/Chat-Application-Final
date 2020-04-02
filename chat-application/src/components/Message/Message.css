@@ -18,6 +18,7 @@
 }
 
 .messageText {
+  min-width: 20px;
   width: 100%;
   letter-spacing: 0;
   float: left;

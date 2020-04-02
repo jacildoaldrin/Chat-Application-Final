@@ -98,10 +98,10 @@ io.on("connection", socket => {
       username: username,
       message: message
     });
-    logs.logMessageSent(
-      users[socket.id].username,
-      users[socket.id].room,
-      message
-    );
+    // logs.logMessageSent(
+    //   users[socket.id].username,
+    //   users[socket.id].room,
+    //   message
+    // );
   });
 });
