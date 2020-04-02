@@ -12,7 +12,7 @@ import Rooms from './rooms';
 function RoomAdd() {
   const [show, setShow] = useState(false);
   const [roomName, setRoomName] = useState('');
-  const [roomStatus, setRoomStatus] = useState('Active');
+  const [roomStatus, setRoomStatus] = useState('active');
   const [roomsList, setRoomsList] = useState([]);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
@@ -72,8 +72,8 @@ function RoomAdd() {
             <Form.Group controlId="roomStatu">
               <Form.Label>Room Status</Form.Label>
             <Form.Control  as="select" value={roomStatus} onChange={handleChangeStatus}>
-                <option>Active</option>
-                <option>Inactive</option>
+                <option>active</option>
+                <option>inactive</option>
             </Form.Control>
             </Form.Group>
             <Button variant="primary" type="submit">

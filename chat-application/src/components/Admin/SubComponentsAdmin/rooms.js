@@ -12,7 +12,7 @@ class Rooms extends React.Component {
       show: false,
       currId: "",
       newRoomName: "",
-      newRoomStatus: "Active",
+      newRoomStatus: "active",
       myRooms: []
     };
   }
@@ -127,8 +127,8 @@ handleClose(){
             <Form.Group controlId="roomStatu">
               <Form.Label>Room Status</Form.Label>
             <Form.Control  as="select" value={this.state.newRoomStatus} onChange={(event) => this.handleChangeStatus(event)}>
-                <option>Active</option>
-                <option>Inactive</option>
+                <option>active</option>
+                <option>inactive</option>
             </Form.Control>
             </Form.Group>
             <Button variant="primary" type="submit">
