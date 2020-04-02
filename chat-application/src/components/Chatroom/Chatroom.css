@@ -58,9 +58,10 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  background-color: #3A3B3C;
+  background: linear-gradient(#2979ff, #3A3B3C);
   border-bottom: solid 2px #242526;
   color: #e4e6eb;
+  padding: 3%;
   border-radius: 4px 4px 0 0;
   height: 60px;
   width: 100%;
