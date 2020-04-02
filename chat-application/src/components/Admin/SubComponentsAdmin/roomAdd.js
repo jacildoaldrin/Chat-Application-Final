@@ -67,7 +67,7 @@ function RoomAdd() {
           <Form onSubmit={addRoom}>
             <Form.Group controlId="roomName">
               <Form.Label>Room Name</Form.Label>
-              <Form.Control onChange={handleChangeRoom} type="text" placeholder="Enter Text Here" />
+              <Form.Control onChange={handleChangeRoom} type="text" placeholder="Enter Room Here" required />
             </Form.Group>
             <Form.Group controlId="roomStatu">
               <Form.Label>Room Status</Form.Label>

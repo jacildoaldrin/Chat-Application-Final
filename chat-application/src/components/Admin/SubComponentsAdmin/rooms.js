@@ -126,7 +126,7 @@ handleClose(){
           <Form onSubmit={() => this.editRoom(this.state.currId,this.state.newRoomName,this.state.newRoomStatus)}>
             <Form.Group controlId="roomName">
               <Form.Label>Room Name</Form.Label>
-              <Form.Control value={this.state.newRoomName} onChange={(event) => this.handleChangeRoom(event)} type="text" placeholder="Enter Text Here"/>
+              <Form.Control value={this.state.newRoomName} onChange={(event) => this.handleChangeRoom(event)} type="text" placeholder="Enter Room Here" required/>
             </Form.Group>
             <Form.Group controlId="roomStatu">
               <Form.Label>Room Status</Form.Label>
