@@ -7,7 +7,7 @@ const Admin = () => {
     return ( 
         
         <div id="body">
-        <h1>Admin Page</h1>
+        <h1><b>Admin Page</b></h1>
         <AdminTabs/>
         </div>
      );

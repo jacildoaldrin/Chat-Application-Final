@@ -13,7 +13,6 @@ function RoomAdd() {
   const [show, setShow] = useState(false);
   const [roomName, setRoomName] = useState('');
   const [roomStatus, setRoomStatus] = useState('active');
-  const [roomsList, setRoomsList] = useState([]);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
@@ -54,11 +53,10 @@ function RoomAdd() {
   return (
     <>
       <div style={{ width: "10em", margin: "1em", marginTop: "2em" }}>
-        <Button variant="primary" onClick={handleShow}>
+        <Button variant="secondary" onClick={handleShow}>
           Add Room
         </Button>
       </div>
-
       <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
           <Modal.Title>Add Room</Modal.Title>

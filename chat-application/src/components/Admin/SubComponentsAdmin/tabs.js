@@ -4,6 +4,8 @@ import  AdminEvents  from './events';
 import AdminMessage from './messages';
 import RoomAdd from './roomAdd';
 
+import "./subcomponents.css";
+
 class AdminTabs extends React.Component {
   constructor(props) {
     super(props);
@@ -13,8 +15,8 @@ class AdminTabs extends React.Component {
   render() {
     return (
       <>
-      <Tabs defaultActiveKey="rooms" id="uncontrolled-tab-example">
-        <Tab eventKey="eventHistory" title="Event History">
+      <Tabs className="myTabs" defaultActiveKey="rooms" id="uncontrolled-tab-example">
+        <Tab className="myTab" eventKey="eventHistory" title="Event History">
           <AdminEvents/>
         </Tab>
         <Tab eventKey="messageHistory" title="Message History">

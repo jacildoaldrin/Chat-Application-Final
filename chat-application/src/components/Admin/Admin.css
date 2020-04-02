@@ -1,7 +1,7 @@
-/* #body{
-    background-color: black;
+#body{
+    background-color: #18191a;
     color: white;
-    max-height: 100%;
+    height: 100vh;
 }
 
 h1{
@@ -12,4 +12,4 @@ h1{
 body{
     height: 100%;
 }
- */
+

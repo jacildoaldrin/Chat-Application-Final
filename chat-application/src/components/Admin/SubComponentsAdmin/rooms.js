@@ -93,7 +93,7 @@ handleClose(){
           <td>{Moment(new Date(edited)).format("YYYY-MM-DD")}</td>
           <td>{Moment(new Date(edited)).format("hh:mm:ss")}</td>
           <td>{status}</td>
-          <td><Button variant="primary" onClick={() => this.handleShow(_id,roomname,status)}>Edit</Button></td>
+          <td><Button variant="secondary" onClick={() => this.handleShow(_id,roomname,status)}>Edit</Button></td>
         </tr>
       );
     });
