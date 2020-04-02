@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import queryString from "query-string";
 import io from "socket.io-client";
+import axios from "axios";
 
 // style
 import "./Chatroom.css";
@@ -8,16 +10,19 @@ import "./Chatroom.css";
 // components
 import Inputbox from "../Inputbox/Inputbox";
 import Chatbox from "../Chatbox/Chatbox";
-import Info from "../Info/Info";
+import Rooms from "../Rooms/Rooms";
+import Chatinfo from "../Chatinfo/Chatinfo";
+import Roomsinfo from "../Roomsinfo/Roomsinfo";
 
 const port = process.env.port || 5000;
-const endpoint = `localhost:${port}`;
+const endpoint = `http://localhost:${port}`;
 
 let socket;
 
 const Chat = ({ location }) => {
   const [username, setName] = useState("");
   const [room, setRoom] = useState("");
+  const [rooms, setRooms] = useState([]);
   const [message, setMessage] = useState("");
   const [messages, setMessages] = useState([]);
 
@@ -26,7 +31,7 @@ const Chat = ({ location }) => {
     const { room } = queryString.parse(location.search);
     setName(username);
     setRoom(room);
-
+    getRooms();
     socket = io(endpoint);
     socket.emit("new-user", { username, room });
   }, [location.search]);
@@ -47,31 +52,32 @@ const Chat = ({ location }) => {
   };
 
   // function to join a room
-  const joinRoom = event => {
+  const joinRoom = (event, roomname) => {
     event.preventDefault();
-    socket.emit("join-room", room);
+    // socket.emit("join-room", roomname);
+    setRoom(roomname);
+  };
+
+  const getRooms = () => {
+    axios.get(`${endpoint}/room/room-list`).then(res => {
+      setRooms(res.data);
+      console.log(res.data);
+    });
   };
 
   return (
     <>
       <div className="outerContainer">
         <div className="chatContainer">
-          <div className="infoBar">
-            <div className="leftChatContainer">
-              <h3><strong className="mr-2">Username:</strong> {username}</h3>
-            </div>
-            <div className="leftChatContainer">
-              <h3><strong className="mr-2">Room:</strong> {room}</h3>
-            </div>
-          </div>
+          <Chatinfo username={username} room={room} />
           <Chatbox messages={messages} username={username} />
-          <Inputbox message={message} setMessage={setMessage} sendMessage={sendMessage}/>
+          <Inputbox message={message} setMessage={setMessage} sendMessage={sendMessage}
+          />
         </div>
-        <div className="roomContainer">
-          <div className="infoBar">
-            <div className="centerRoomContainer">
-              <h3><strong>Room List</strong></h3>
-            </div>
+        <div className="roomsContainer">
+          <div className="roomList">
+            <Roomsinfo />
+            <Rooms rooms={rooms} joinRoom={joinRoom}/>
           </div>
         </div>
       </div>

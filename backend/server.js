@@ -63,11 +63,11 @@ io.on("connection", socket => {
     socket.join(users[socket.id].room);
   });
 
-  socket.on("user-typing", data => {
+  socket.on("typing", data => {
     //No logs needed for this
-    io.to(users[socket.id].room).emit("typing", {
-      username: users[socket.id].username,
-      typing: data
+    io.to(users[socket.id].room).emit("user-typing", {
+      username: data.username,
+      typing: data.typing
     });
   });
 

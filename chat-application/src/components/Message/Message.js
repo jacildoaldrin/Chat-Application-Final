@@ -2,8 +2,6 @@ import React from "react";
 import "./Message.css";
 
 const Message = props => {
-  let currentUser = props.message.username === props.username;
-
   let content;
 
   switch (props.message.username) {

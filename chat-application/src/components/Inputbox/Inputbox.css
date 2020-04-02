@@ -7,14 +7,14 @@
   background-color: #3A3B3C;
   color: #DBDDE2;
   border: none;
-  border-radius: 2px;
+  border-radius: 0px 0px 0px 8px;
   padding: 0.8%;
   padding-left: 2%;
   width: 80%;
   font-size: 24px;
 }
 
-#material-icons {
+#send-icon {
   font-size: 40px;
 }
 
@@ -33,4 +33,5 @@ select:focus {
   display: inline-block;
   border: none;
   width: 20%;
+  border-radius: 0px 0px 10px 0px;
 }
