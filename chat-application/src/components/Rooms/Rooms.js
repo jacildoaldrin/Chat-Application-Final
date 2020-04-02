@@ -15,7 +15,7 @@ const Rooms = props => {
               }
             >
               {props.currentroom === room.roomname ? (
-                <div className="room-item active">
+                <div className="room-item room-selected">
                   <i className="material-icons enter-icon mr-5">input</i>
                   <strong>{room.roomname}</strong>
                 </div>
