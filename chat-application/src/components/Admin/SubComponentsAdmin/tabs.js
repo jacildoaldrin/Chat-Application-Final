@@ -2,6 +2,7 @@ import React from 'react';
 import { Tabs, Tab } from 'react-bootstrap';
 import  AdminEvents  from './events';
 import AdminMessage from './messages';
+import RoomAdd from './roomAdd';
 
 class AdminTabs extends React.Component {
   constructor(props) {
@@ -12,7 +13,7 @@ class AdminTabs extends React.Component {
   render() {
     return (
       <>
-      <Tabs defaultActiveKey="eventHistory" id="uncontrolled-tab-example">
+      <Tabs defaultActiveKey="rooms" id="uncontrolled-tab-example">
         <Tab eventKey="eventHistory" title="Event History">
           <AdminEvents/>
         </Tab>
@@ -20,11 +21,10 @@ class AdminTabs extends React.Component {
           <AdminMessage/>
         </Tab>
         <Tab eventKey="rooms" title="Rooms">
-          <p>Rooms Here</p>
+          <RoomAdd/>
         </Tab>
       </Tabs>
-      </>
-
+      </> 
     );
   }
 }
