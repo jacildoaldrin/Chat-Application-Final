@@ -1,21 +1,27 @@
 #form {
   display: flex;
-  border-top: 1px solid #333435;
 }
 
 #input {
   background-color: #3A3B3C;
   color: #DBDDE2;
   border: none;
-  border-radius: 0px 0px 0px 8px;
-  padding: 0.8%;
+  border-radius: 30px;
+  padding: 0.5%;
+  width: 80%;
+  font-size: 20px;
   padding-left: 2%;
-  width: 85%;
-  font-size: 24px;
+  padding-right: 2%;
+  margin: 0%  5% 1% 5%;
 }
 
 #send-icon {
-  font-size: 40px;
+  font-size: 50px;
+  padding: 5px 0px 5px 5px;
+}
+
+#send-icon:hover{
+  color:#18191a;
 }
 
 input:focus,
@@ -25,13 +31,17 @@ select:focus {
 }
 
 #sendButton {
-  color: #fff !important;
+  color: #e4e6eb !important;
   text-transform: uppercase;
   text-decoration: none;
-  background: #2979ff;
-  padding: 10px;
+  /* background: #2979ff; */
+  background: #242526;
   display: inline-block;
   border: none;
-  width: 15%;
-  border-radius: 0px 0px 10px 0px;
+  margin: 0%  1% 1% 0%;
+  border-radius: 50%;
+}
+
+#sendButton:hover {
+  background: #DBDDE2;
 }

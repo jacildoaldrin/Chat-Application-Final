@@ -4,7 +4,6 @@ import "./Join.css";
 
 const Join = () => {
   const [username, setName] = useState('');
-  const room = "Default";
 
   return (
     <section id="cover" className="min-vh-100">

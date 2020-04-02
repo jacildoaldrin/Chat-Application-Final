@@ -18,7 +18,7 @@ const endpoint = `http://localhost:${port}`;
 
 let socket;
 
-const Chat = ({ location }) => {
+const Chatroom = ({ location }) => {
   const [username, setName] = useState("");
   const [room, setRoom] = useState("");
   const [rooms, setRooms] = useState([]);
@@ -93,4 +93,4 @@ const Chat = ({ location }) => {
   );
 };
 
-export default Chat;
+export default Chatroom;

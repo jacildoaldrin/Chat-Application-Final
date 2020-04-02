@@ -94,7 +94,6 @@ io.on("connection", socket => {
         message: `${users[socket.id].username} has disconnected.`
       });
     }
-    console.log('user deleted')
     delete users[socket.id];
   });
 
