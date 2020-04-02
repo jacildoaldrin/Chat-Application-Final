@@ -37,11 +37,12 @@ handleClose(){
       });
  };
 
- handleShow(_id, roomNameArg) { 
+ handleShow(_id, roomNameArg, roomStatusArg) { 
      this.setState({
          show: true,
          currId: _id,
-         newRoomName: roomNameArg
+         newRoomName: roomNameArg,
+         newRoomStatus: roomStatusArg
      })
     };
 
@@ -92,7 +93,7 @@ handleClose(){
           <td>{Moment(new Date(edited)).format("YYYY-MM-DD")}</td>
           <td>{Moment(new Date(edited)).format("hh:mm:ss")}</td>
           <td>{status}</td>
-          <td><Button variant="secondary" onClick={() => this.handleShow(_id,roomname)}>Edit</Button></td>
+          <td><Button variant="secondary" onClick={() => this.handleShow(_id,roomname,status)}>Edit</Button></td>
         </tr>
       );
     });
