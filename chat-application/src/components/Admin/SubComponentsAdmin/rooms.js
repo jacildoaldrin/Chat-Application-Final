@@ -88,7 +88,9 @@ handleClose(){
         <tr key={_id}>
           <td>{roomname}</td>
           <td>{Moment(new Date(created)).format("YYYY-MM-DD")}</td>
-          <td>{edited}</td>
+          <td>{Moment(new Date(created)).format("hh:mm:ss")}</td>
+          <td>{Moment(new Date(edited)).format("YYYY-MM-DD")}</td>
+          <td>{Moment(new Date(edited)).format("hh:mm:ss")}</td>
           <td>{status}</td>
           <td><Button variant="secondary" onClick={() => this.handleShow(_id,roomname)}>Edit</Button></td>
         </tr>
@@ -105,7 +107,9 @@ handleClose(){
     <tr>
       <th>Room Name</th>
       <th>Date Created</th>
+      <th>Time Created</th>
       <th>Date Edited</th>
+      <th>Time Edited</th>
       <th>Status</th>
       <th>Action</th>
     </tr>

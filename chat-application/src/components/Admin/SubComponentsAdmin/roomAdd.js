@@ -61,7 +61,7 @@ function RoomAdd() {
 
       <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
-          <Modal.Title>Room</Modal.Title>
+          <Modal.Title>Add Room</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <Form onSubmit={addRoom}>
