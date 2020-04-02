@@ -1,10 +1,12 @@
-import React from 'react';
+import React from "react";
+
+import "./Info.css";
 
 const Info = () => {
-    return ( 
-        <>
-        </>
-     );
-}
- 
+  return (
+    <>
+    </>
+  );
+};
+
 export default Info;

@@ -55,7 +55,7 @@ io.on("connection", socket => {
   socket.on("new-user", data => {
     users[socket.id].username = data.username;
     users[socket.id].room = data.room;
-    logs.logConnectToApp(users[socket.id].username, users[socket.id].room);
+    // logs.logConnectToApp(users[socket.id].username, users[socket.id].room);
     io.to(users[socket.id].room).emit("chat-message", {
       username: "System",
       message: `${users[socket.id].username} joined the room!`
@@ -72,20 +72,20 @@ io.on("connection", socket => {
   });
 
   socket.on("join-room", room => {
-    logs.logJoinRoom(users[socket.id].username, users[socket.id].room);
+    // logs.logJoinRoom(users[socket.id].username, users[socket.id].room);
     users[socket.id].room = room;
     socket.join(room);
   });
 
   socket.on("leave-room", room => {
-    logs.logLeftRoom(users[socket.id].username, users[socket.id].room);
+    // logs.logLeftRoom(users[socket.id].username, users[socket.id].room);
     socket.to(room).emit("user-disconnected", users[socket.id]);
     socket.leave(room);
   });
 
   socket.on("disconnect", () => {
     if (users[socket.id].room != null) {
-      logs.logDisconnectToApp(users[socket.id].username, users[socket.id].room);
+      // logs.logDisconnectToApp(users[socket.id].username, users[socket.id].room);
       io.to(users[socket.id].room).emit("chat-message", {
         username: "System",
         message: `${users[socket.id].username} has disconnected.`
@@ -102,11 +102,10 @@ io.on("connection", socket => {
       username: username,
       message: message
     });
-    callback();
-    logs.logMessageSent(
-      users[socket.id].username,
-      users[socket.id].room,
-      message
-    );
+    // logs.logMessageSent(
+    //   users[socket.id].username,
+    //   users[socket.id].room,
+    //   message
+    // );
   });
 });

@@ -8,6 +8,7 @@ import "./Chatroom.css";
 // components
 import Inputbox from "../Inputbox/Inputbox";
 import Chatbox from "../Chatbox/Chatbox";
+import Info from "../Info/Info";
 
 const port = process.env.port || 5000;
 const endpoint = `localhost:${port}`;
@@ -20,7 +21,6 @@ const Chat = ({ location }) => {
   const [message, setMessage] = useState("");
   const [messages, setMessages] = useState([]);
 
-  
   useEffect(() => {
     const { username } = queryString.parse(location.search);
     const { room } = queryString.parse(location.search);
@@ -40,14 +40,11 @@ const Chat = ({ location }) => {
   // sends a message
   const sendMessage = event => {
     event.preventDefault();
-
     if (message) {
       socket.emit("send-message", message);
       setMessage("");
     }
   };
-
-  console.log(message);
 
   // function to join a room
   const joinRoom = event => {
@@ -56,16 +53,29 @@ const Chat = ({ location }) => {
   };
 
   return (
-    <div className="outerContainer">
-      <div className="innerContainer">
-        <Chatbox messages={messages} username={username} />
-        <Inputbox
-          message={message}
-          setMessage={setMessage}
-          sendMessage={sendMessage}
-        />
+    <>
+      <div className="outerContainer">
+        <div className="chatContainer">
+          <div className="infoBar">
+            <div className="leftChatContainer">
+              <h3><strong className="mr-2">Username:</strong> {username}</h3>
+            </div>
+            <div className="leftChatContainer">
+              <h3><strong className="mr-2">Room:</strong> {room}</h3>
+            </div>
+          </div>
+          <Chatbox messages={messages} username={username} />
+          <Inputbox message={message} setMessage={setMessage} sendMessage={sendMessage}/>
+        </div>
+        <div className="roomContainer">
+          <div className="infoBar">
+            <div className="centerRoomContainer">
+              <h3><strong>Room List</strong></h3>
+            </div>
+          </div>
+        </div>
       </div>
-    </div>
+    </>
   );
 };
 
