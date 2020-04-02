@@ -56,7 +56,8 @@ io.on("connection", socket => {
     io.to(users[socket.id].room).emit("chat-message", {
       username: "System",
       message: `${users[socket.id].username} joined the room !`,
-      user: users[socket.id].username
+      user: users[socket.id].username,
+      roomname: users[socket.id].room
     });
   });
 
@@ -68,7 +69,8 @@ io.on("connection", socket => {
     io.to(room).emit("chat-message", {
       username: "System",
       message: `${users[socket.id].username} has joined the room!`,
-      user: users[socket.id].username
+      user: users[socket.id].username,
+      roomname: users[socket.id].room
     });
 
     io.to(users[socket.id].room).emit("new-room", users[socket.id].room);
@@ -91,9 +93,8 @@ io.on("connection", socket => {
         username: "System",
         message: `${users[socket.id].username} has disconnected.`
       });
-    } else {
-      delete users[socket.id];
     }
+    console.log('user deleted')
     delete users[socket.id];
   });
 

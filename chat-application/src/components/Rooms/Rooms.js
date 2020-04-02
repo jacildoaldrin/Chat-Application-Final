@@ -8,11 +8,23 @@ const Rooms = props => {
         {props.rooms.map((room, index) => (
           <div key={index}>
             <div
-              className="room-item"
-              onClick={event => props.currentroom === room.roomname? event.preventDefault():props.switchRoom(event, room.roomname)}
+              onClick={event =>
+                props.currentroom === room.roomname
+                  ? event.preventDefault()
+                  : props.switchRoom(event, room.roomname)
+              }
             >
-              <i className="material-icons enter-icon mr-5">input</i>
-              <strong>{room.roomname}</strong>
+              {props.currentroom === room.roomname ? (
+                <div className="room-item active">
+                  <i className="material-icons enter-icon mr-5">input</i>
+                  <strong>{room.roomname}</strong>
+                </div>
+              ) : (
+                <div className="room-item">
+                  <i className="material-icons enter-icon mr-5">input</i>
+                  <strong>{room.roomname}</strong>
+                </div>
+              )}
             </div>
           </div>
         ))}
