@@ -5,18 +5,24 @@
   color: white;
   display: inline-block;
   max-width: 80%;
+  min-width: 250px;
+}
+
+.messageBox-sender {
+  background: #f3f3f3;
+  border-radius: 20px;
+  padding: 10px 10px 0px 10px;
+  color: white;
+  display: inline-block;
+  max-width: 80%;
 }
 
 .messageText {
   width: 100%;
   letter-spacing: 0;
   float: left;
-  font-size: 1.1em;
+  font-size: 1.2em;
   word-wrap: break-word;
-}
-
-.messageText img {
-  vertical-align: middle;
 }
 
 .messageContainer {
@@ -27,22 +33,6 @@
   padding-bottom: 1%;
 }
 
-.sentText {
-  display: flex;
-  align-items: center;
-  font-family: Helvetica;
-  color: #828282;
-  letter-spacing: 0.3px;
-}
-
-.pl-10 {
-  padding-left: 10px;
-}
-
-.pr-10 {
-  padding-right: 10px;
-}
-
 .justifyStart {
   justify-content: flex-start;
 }
@@ -51,19 +41,34 @@
   justify-content: flex-end;
 }
 
-.colorWhite {
-  color: white;
+.systemMessage{
+  padding: 0 4.5%;
+  display: flex;
+  justify-content: flex-start;
+  opacity: 0.5;
+}
+
+.chatMessage{
+  opacity: 0.9;
+  padding: 0 5.5%;
+  display: flex;
+  justify-content: flex-start;
+}
+
+.userMessage{
+  opacity: 0.9;
+  padding: 0 5.5%;
+  display: flex;
+  justify-content: flex-end;
 }
 
 .username-received {
-  background-color: white;
-  padding-left: 5%;
-  margin: auto;
-  padding-bottom: 1px;
+  display: flex;
+  align-items: center;
 }
 
 .colorDark {
-  color: #353535;
+  color: #e4e6eb;
 }
 
 .backgroundBlue {
@@ -71,5 +76,11 @@
 }
 
 .backgroundLight {
-  background: #f3f3f3;
+  background: #3e4042;
+}
+
+hr.style-two {
+  background-color: #f3f3f3;
+  border: 0;
+  height: 1px;
 }

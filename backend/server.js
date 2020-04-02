@@ -51,7 +51,7 @@ io.on("connection", socket => {
   socket.on("new-user", data => {
     users[socket.id].username = data.username;
     users[socket.id].room = data.room;
-    logs.logConnectToApp(users[socket.id].username, users[socket.id].room);
+    // logs.logConnectToApp(users[socket.id].username, users[socket.id].room);
     io.to(users[socket.id].room).emit("chat-message", {
       username: "System",
       message: `${users[socket.id].username} joined the room!`
@@ -59,29 +59,29 @@ io.on("connection", socket => {
     socket.join(users[socket.id].room);
   });
 
-  socket.on("user-typing", data => {
+  socket.on("typing", data => {
     //No logs needed for this
-    io.to(users[socket.id].room).emit("typing", {
-      username: users[socket.id].username,
-      typing: data
+    io.to(users[socket.id].room).emit("user-typing", {
+      username: data.username,
+      typing: data.typing
     });
   });
 
   socket.on("join-room", room => {
-    logs.logJoinRoom(users[socket.id].username, users[socket.id].room);
+    // logs.logJoinRoom(users[socket.id].username, users[socket.id].room);
     users[socket.id].room = room;
     socket.join(room);
   });
 
   socket.on("leave-room", room => {
-    logs.logLeftRoom(users[socket.id].username, users[socket.id].room);
+    // logs.logLeftRoom(users[socket.id].username, users[socket.id].room);
     socket.to(room).emit("user-disconnected", users[socket.id]);
     socket.leave(room);
   });
 
   socket.on("disconnect", () => {
     if (users[socket.id].room != null) {
-      logs.logDisconnectToApp(users[socket.id].username, users[socket.id].room);
+      // logs.logDisconnectToApp(users[socket.id].username, users[socket.id].room);
       io.to(users[socket.id].room).emit("chat-message", {
         username: "System",
         message: `${users[socket.id].username} has disconnected.`
@@ -98,7 +98,6 @@ io.on("connection", socket => {
       username: username,
       message: message
     });
-    //callback();
     logs.logMessageSent(
       users[socket.id].username,
       users[socket.id].room,
