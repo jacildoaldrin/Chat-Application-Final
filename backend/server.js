@@ -45,25 +45,19 @@ app.use("/room", roomRoute);
 const users = {};
 
 io.on("connection", socket => {
-  // console.log(`new socket created with id ${socket.id}`);
   users[socket.id] = { username: null, room: null };
 
   socket.on("new-user", data => {
     users[socket.id].username = data.username;
     users[socket.id].room = data.room;
+
+    socket.join(users[socket.id].room);
     // logs.logConnectToApp(users[socket.id].username, users[socket.id].room);
     io.to(users[socket.id].room).emit("chat-message", {
       username: "System",
-      message: `${users[socket.id].username} joined the room!`
-    });
-    socket.join(users[socket.id].room);
-  });
-
-  socket.on("typing", data => {
-    //No logs needed for this
-    io.to(users[socket.id].room).emit("user-typing", {
-      username: data.username,
-      typing: data.typing
+      message: `${users[socket.id].username} joined the room !`,
+      user: users[socket.id].username,
+      roomname: users[socket.id].room
     });
   });
 
@@ -71,12 +65,25 @@ io.on("connection", socket => {
     // logs.logJoinRoom(users[socket.id].username, users[socket.id].room);
     users[socket.id].room = room;
     socket.join(room);
+
+    io.to(room).emit("chat-message", {
+      username: "System",
+      message: `${users[socket.id].username} has joined the room!`,
+      user: users[socket.id].username,
+      roomname: users[socket.id].room
+    });
+
+    io.to(users[socket.id].room).emit("new-room", users[socket.id].room);
   });
 
   socket.on("leave-room", room => {
     // logs.logLeftRoom(users[socket.id].username, users[socket.id].room);
-    socket.to(room).emit("user-disconnected", users[socket.id]);
     socket.leave(room);
+    io.to(room).emit("chat-message", {
+      username: "System",
+      message: `${users[socket.id].username} has left the room!`,
+      user: users[socket.id].username
+    });
   });
 
   socket.on("disconnect", () => {
@@ -86,8 +93,6 @@ io.on("connection", socket => {
         username: "System",
         message: `${users[socket.id].username} has disconnected.`
       });
-    } else {
-      delete users[socket.id];
     }
     delete users[socket.id];
   });

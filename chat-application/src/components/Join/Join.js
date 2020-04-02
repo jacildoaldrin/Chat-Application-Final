@@ -4,7 +4,6 @@ import "./Join.css";
 
 const Join = () => {
   const [username, setName] = useState('');
-  const room = "default";
 
   return (
     <section id="cover" className="min-vh-100">
@@ -15,7 +14,7 @@ const Join = () => {
               <h1 className="display-4 py-1 text-truncate">Enter Username</h1>
               <div className="px-2">
                 <div className="justify-content-center">
-                  <Link onClick={event => !username ? event.preventDefault() : null} to={{pathname: "/chatroom", search: `?username=${username}&room=${room}`}}>
+                  <Link onClick={event => !username ? event.preventDefault() : null} to={{pathname: "/chatroom", search: `?username=${username}`}}>
                     <form className="form-group" id="join-form">
                       <div className="form-group">
                         <input className="form-control" type="text" placeholder="Username" onChange={event => setName(event.target.value)} />

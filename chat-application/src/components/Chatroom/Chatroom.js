@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
 import queryString from "query-string";
 import io from "socket.io-client";
 import axios from "axios";
@@ -19,7 +18,7 @@ const endpoint = `http://localhost:${port}`;
 
 let socket;
 
-const Chat = ({ location }) => {
+const Chatroom = ({ location }) => {
   const [username, setName] = useState("");
   const [room, setRoom] = useState("");
   const [rooms, setRooms] = useState([]);
@@ -28,7 +27,7 @@ const Chat = ({ location }) => {
 
   useEffect(() => {
     const { username } = queryString.parse(location.search);
-    const { room } = queryString.parse(location.search);
+    const room = "Default";
     setName(username);
     setRoom(room);
     getRooms();
@@ -36,6 +35,14 @@ const Chat = ({ location }) => {
     socket.emit("new-user", { username, room });
   }, [location.search]);
 
+  // listens for event new-room
+  useEffect(()=>{
+    socket.on("new-room", room => {
+      setRoom(room);
+    });
+  }, [room])
+
+  // messages received
   useEffect(() => {
     socket.on("chat-message", message => {
       setMessages(messages => [...messages, message]);
@@ -51,19 +58,20 @@ const Chat = ({ location }) => {
     }
   };
 
-  // function to join a room
-  const joinRoom = (event, roomname) => {
-    event.preventDefault();
-    // socket.emit("join-room", roomname);
-    setRoom(roomname);
-  };
-
+  // get all rooms from the database
   const getRooms = () => {
     axios.get(`${endpoint}/room/room-list`).then(res => {
       setRooms(res.data);
-      console.log(res.data);
     });
   };
+
+  // leaves and joins a new room
+  const switchRoom = (event, newRoom) => {
+    event.preventDefault();
+    setMessages([]);
+    socket.emit('leave-room', room);
+    socket.emit('join-room', newRoom);
+  }
 
   return (
     <>
@@ -77,7 +85,7 @@ const Chat = ({ location }) => {
         <div className="roomsContainer">
           <div className="roomList">
             <Roomsinfo />
-            <Rooms rooms={rooms} joinRoom={joinRoom}/>
+            <Rooms rooms={rooms} currentroom={room} username={username} switchRoom={switchRoom}/>
           </div>
         </div>
       </div>
@@ -85,4 +93,4 @@ const Chat = ({ location }) => {
   );
 };
 
-export default Chat;
+export default Chatroom;

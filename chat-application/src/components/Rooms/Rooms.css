@@ -16,3 +16,7 @@
 .room-item:hover {
   background-color: #3a3b3c;
 }
+
+.active{
+  background-color: #3a3b3c;
+}

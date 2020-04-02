@@ -19,7 +19,11 @@ const Message = props => {
       break;
 
     case "System":
-      content = (
+      content = props.message.user === props.username ? (
+        <div className="systemMessage">
+          <p className="messageText colorDark">You joined {props.message.roomname}!</p>
+        </div>
+      ) : (
         <div className="systemMessage">
           <p className="messageText colorDark">{props.message.message}</p>
         </div>

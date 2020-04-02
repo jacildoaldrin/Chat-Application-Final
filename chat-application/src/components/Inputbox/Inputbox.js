@@ -10,6 +10,7 @@ const Inputbox = ({ message, sendMessage, setMessage }) => {
           type="text"
           value={message}
           onChange={event => {setMessage(event.target.value);}}
+          placeholder="Aa.."
         />
         <button id="sendButton" type="submit"><i className="material-icons" id="send-icon">send</i></button>
       </form>
