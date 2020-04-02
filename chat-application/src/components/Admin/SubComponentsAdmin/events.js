@@ -19,11 +19,9 @@ class AdminEvents extends React.Component {
 
   fetchEvents() {
       axios.get("http://localhost:5000/event/event-history").then( res => {
-        //this.state.events = res.data;
         this.setState({
             events: res.data
         });
-        //console.log(res.data);
       });
   }
 

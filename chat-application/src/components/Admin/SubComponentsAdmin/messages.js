@@ -43,6 +43,7 @@ class AdminMessages extends React.Component {
     });
   }
 
+  
   render() {
     return (
       <div style={{width: "90%", marginLeft: "auto", marginRight:"auto", marginTop: "3em"}}>

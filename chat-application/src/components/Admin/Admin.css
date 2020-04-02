@@ -1,0 +1,15 @@
+#body{
+    background-color: #18191a;
+    color: white;
+    height: 100vh;
+}
+
+h1{
+    margin-top: 2em;
+    margin-left: 0.5em;
+    padding-top: 0.5em;
+}
+body{
+    height: 100%;
+}
+

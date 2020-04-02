@@ -35,4 +35,20 @@ router.route('/room-history').post((req, res) => {
     });
 });
 
+//update room status
+router.route('/room-status-update/:id').put((req, res, next) => {
+    Room.findByIdAndUpdate(req.params.id, {
+      $set: req.body
+    }, (error, data) => {
+      if (error) {
+        return next(error);
+        //console.log(error)
+      } else {
+        console.log('User successfully updated!')
+        //log event
+        res.json(data)
+      }
+    })
+  })
+
 module.exports = router;

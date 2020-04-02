@@ -1,12 +1,15 @@
 import React from 'react';
 import AdminTabs from './SubComponentsAdmin/tabs';
 
+import "./Admin.css";
+
 const Admin = () => {
     return ( 
-        <>
-        <h1>Admin Page</h1>
+        
+        <div id="body">
+        <h1><b>Admin Page</b></h1>
         <AdminTabs/>
-        </>
+        </div>
      );
 }
  
