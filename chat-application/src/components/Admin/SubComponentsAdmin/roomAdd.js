@@ -53,7 +53,7 @@ function RoomAdd() {
   return (
     <>
       <div style={{ width: "10em", margin: "1em", marginTop: "2em" }}>
-        <Button variant="secondary" onClick={handleShow}>
+        <Button variant="primary" onClick={handleShow}>
           Add Room
         </Button>
       </div>
