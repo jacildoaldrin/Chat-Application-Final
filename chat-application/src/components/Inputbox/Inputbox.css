@@ -18,6 +18,7 @@
 #send-icon {
   font-size: 50px;
   padding: 5px 0px 5px 5px;
+  border: none;
 }
 
 #send-icon:hover{
@@ -38,6 +39,7 @@ select:focus {
   background: #242526;
   display: inline-block;
   border: none;
+  outline: none;
   margin: 0%  1% 1% 0%;
   border-radius: 50%;
 }
