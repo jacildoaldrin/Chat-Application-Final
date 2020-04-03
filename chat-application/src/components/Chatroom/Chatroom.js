@@ -60,7 +60,7 @@ const Chatroom = ({ location }) => {
 
   // get all rooms from the database
   const getRooms = () => {
-    axios.get(`${endpoint}/room/room-list`).then(res => {
+    axios.get(`${endpoint}/room/room-list-active`).then(res => {
       setRooms(res.data);
     });
   };

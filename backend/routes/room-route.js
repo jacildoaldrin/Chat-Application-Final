@@ -24,6 +24,17 @@ router.route('/room-list').get((req, res) => {
     });
 });
 
+// Get All Active Rooms
+router.route('/room-list-active').get((req, res) => {
+    Room.find({status: 'active'},(err, data) => {
+        if (err) {
+            return next(err);
+        } else {
+            return res.json(data);
+        }
+    });
+});
+
 //getMessageBasedRoom
 router.route('/room-history').post((req, res) => {
     Message.find({ room: req.body.roomname }, (error, data) => {

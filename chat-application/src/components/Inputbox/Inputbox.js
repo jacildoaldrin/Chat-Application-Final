@@ -4,7 +4,7 @@ import './Inputbox.css';
 const Inputbox = ({ message, sendMessage, setMessage }) => {
   
   return (
-      <form  id="form" onSubmit={event => !message ? event.preventDefault(): sendMessage(event)}>
+      <form id="form" onSubmit={event => !message ? event.preventDefault(): sendMessage(event)}>
         <input
           id="input"
           type="text"
