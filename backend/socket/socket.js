@@ -1,7 +1,18 @@
 //Logs
-const logs = require('../functions/logs');
+const logs = require("../functions/logs");
 
 const users = {};
+
+const joinMessages = [
+  `just joined the room - glhf!`,
+  "just joined. Everyone, look busy!",
+  "just joined. Can I get a heal?",
+  'just landed.',
+  'just joined. Hide your bananas.',
+  'has spawned in the room.',
+  'just slid into the room.',
+  "has arrived. Party's over.",
+];
 
 module.exports = (io) => {
   io.on("connection", (socket) => {
@@ -15,7 +26,7 @@ module.exports = (io) => {
       // logs.logConnectToApp(users[socket.id].username, users[socket.id].room);
       io.to(users[socket.id].room).emit("chat-message", {
         username: "System",
-        message: `${users[socket.id].username} joined the room !`,
+        message: `${users[socket.id].username} ${joinMessages[Math.floor(Math.random() * joinMessages.length)]}`,
         user: users[socket.id].username,
         roomname: users[socket.id].room,
       });
@@ -28,7 +39,7 @@ module.exports = (io) => {
 
       io.to(room).emit("chat-message", {
         username: "System",
-        message: `${users[socket.id].username} has joined the room!`,
+        message: `${users[socket.id].username} ${joinMessages[Math.floor(Math.random() * joinMessages.length)]}`,
         user: users[socket.id].username,
         roomname: users[socket.id].room,
       });
@@ -41,7 +52,7 @@ module.exports = (io) => {
       socket.leave(room);
       io.to(room).emit("chat-message", {
         username: "System",
-        message: `${users[socket.id].username} has left the room!`,
+        message: `${users[socket.id].username} has left the room.`,
         user: users[socket.id].username,
       });
     });
