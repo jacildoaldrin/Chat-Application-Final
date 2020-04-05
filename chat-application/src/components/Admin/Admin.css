@@ -1,7 +1,25 @@
 #body{
     background-color: #18191a;
+    color: #0275d8;
+    height: 100vh; 
+    overflow-x: hidden;
+    
+}
+tr td{
+    background-color: #242526;
+    color: white; 
+    padding: 10px;
+  }
+th{
+    background-color: #242526;
     color: white;
-    height: 100vh;
+}
+table{
+max-width: 80%;
+margin-left: auto;
+margin-right: auto;
+margin-top: 15px;
+border-spacing: 10px;
 }
 
 h1{
