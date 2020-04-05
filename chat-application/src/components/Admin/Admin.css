@@ -1,33 +1,31 @@
-#body{
-    background-color: #18191a;
-    color: #0275d8;
-    height: 100vh; 
-    overflow-x: hidden;
-    
+#body {
+  background-color: #18191a;
+  color: #0275d8;
+  height: 100vh;
+  overflow-x: hidden;
 }
-tr td{
-    background-color: #242526;
-    color: white; 
-    padding: 10px;
-  }
-th{
-    background-color: #242526;
-    color: white;
+tr td {
+  background-color: #242526;
+  color: white;
+  padding: 10px;
 }
-table{
-max-width: 80%;
-margin-left: auto;
-margin-right: auto;
-margin-top: 15px;
-border-spacing: 10px;
+th {
+  background-color: #242526;
+  color: white;
 }
-
-h1{
-    margin-top: 2em;
-    margin-left: 0.5em;
-    padding-top: 0.5em;
-}
-body{
-    height: 100%;
+table {
+  max-width: 80%;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 15px;
+  border-spacing: 10px;
 }
 
+h1 {
+  margin-top: 2em;
+  margin-left: 0.5em;
+  padding-top: 0.5em;
+}
+body {
+  height: 100%;
+}
