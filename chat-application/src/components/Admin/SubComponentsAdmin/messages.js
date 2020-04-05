@@ -1,7 +1,8 @@
 import React from "react";
-import { Table } from 'react-bootstrap';
+//import { Table } from 'react-bootstrap';
 import axios from 'axios';
 import Moment from 'moment';
+import { MDBDataTable } from 'mdbreact';
 
 
 class AdminMessages extends React.Component {
@@ -9,7 +10,27 @@ class AdminMessages extends React.Component {
     super(props);
     this.wrapper = React.createRef();
     this.state = {
-      myMessages: []
+      columns: [
+        {label: 'Sender',
+        field: 'sender',
+        width: 150},
+        {label: 'Room',
+        field: 'room',
+        width: 150},
+        {label: 'Message',
+        field: 'messages',
+        width: 150},
+        {label: 'Type',
+        field: 'type',
+        width: 150},
+        {label: 'Date',
+        field: 'date',
+        width: 150},
+        {label: 'Time',
+        field: 'time',
+        width: 150},
+      ],
+        rows: []  
     };
   }
 
@@ -19,48 +40,37 @@ class AdminMessages extends React.Component {
 
   fetchEvents() {
       axios.get("http://localhost:5000/message/message-history").then( res => {
-        //this.state.events = res.data;
         this.setState({
-            myMessages: res.data
+            rows: res.data
         });
-        //console.log(res.data);
+        let newArr = [];
+        for (let x in this.state.rows) {
+          let newObject = {};
+          newObject.sender = this.state.rows[x].sender;
+          newObject.room = this.state.rows[x].room;
+          newObject.messages = this.state.rows[x].message;
+          newObject.type = this.state.rows[x].type;
+          newObject.date = Moment(new Date(this.state.rows[x].date)).format("YYYY-MM-DD");
+          newObject.time = Moment(new Date(this.state.rows[x].date)).format("hh:mm:ss");
+          newArr.push(newObject);
+        }
+        this.setState({
+          rows: newArr
+        });
       });
   }
-
-  renderTableData() {
-    return this.state.myMessages.map((myMessage, index) => {
-      const { _id, sender, room, message, type, date } = myMessage; //destructuring
-      return (
-        <tr key={_id}>
-          <td>{sender}</td>
-          <td>{room}</td>
-          <td>{message}</td>
-          <td>{type}</td>
-          <td>{Moment(new Date(date)).format("YYYY-MM-DD")}</td>
-          <td>{Moment(new Date(date)).format("hh:mm:ss")}</td>
-        </tr>
-      );
-    });
-  }
-
   
   render() {
     return (
-      <div style={{width: "90%", marginLeft: "auto", marginRight:"auto", marginTop: "3em"}}>
-        <Table striped bordered hover variant="dark" id="students">
-        <thead>
-    <tr>
-      <th>Sender</th>
-      <th>Room</th>
-      <th>Message</th>
-      <th>Type</th>
-      <th>Date</th>
-      <th>Time</th>
-    </tr>
-  </thead>
-          <tbody>{this.renderTableData()}</tbody>
-        </Table>
-      </div>
+      <>
+      <br></br>
+      <MDBDataTable
+        striped
+        bordered
+        small
+        data={this.state}>  
+    </MDBDataTable>
+    </>
     );
   }
 }
