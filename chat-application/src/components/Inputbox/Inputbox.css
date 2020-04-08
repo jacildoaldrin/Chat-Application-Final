@@ -3,8 +3,8 @@
 }
 
 #input {
-  background-color: #3A3B3C;
-  color: #DBDDE2;
+  background-color: #3a3b3c;
+  color: #dbdde2;
   border: none;
   border-radius: 30px;
   padding: 0.5%;
@@ -12,7 +12,7 @@
   font-size: 20px;
   padding-left: 2%;
   padding-right: 2%;
-  margin: 0%  5% 1% 5%;
+  margin: 0% 5% 1% 5%;
 }
 
 #send-icon {
@@ -21,8 +21,8 @@
   border: none;
 }
 
-#send-icon:hover{
-  color:#18191a;
+#send-icon:hover {
+  color: #18191a;
 }
 
 input:focus,
@@ -40,10 +40,10 @@ select:focus {
   display: inline-block;
   border: none;
   outline: none;
-  margin: 0%  1% 1% 0%;
+  margin: 0% 1% 1% 0%;
   border-radius: 50%;
 }
 
 #sendButton:hover {
-  background: #DBDDE2;
+  background: #dbdde2;
 }

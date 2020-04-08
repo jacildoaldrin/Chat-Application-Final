@@ -12,7 +12,6 @@ import Chatbox from "../Chatbox/Chatbox";
 import Rooms from "../Rooms/Rooms";
 import Chatinfo from "../Chatinfo/Chatinfo";
 import Roomsinfo from "../Roomsinfo/Roomsinfo";
-import GoAdmin from "../GoAdmin/GoAdmin";
 
 const port = process.env.port || 5000;
 const endpoint = `http://localhost:${port}`;
@@ -87,7 +86,6 @@ const Chatroom = ({ location }) => {
           <div className="roomList">
             <Roomsinfo />
             <Rooms rooms={rooms} currentroom={room} username={username} switchRoom={switchRoom}/>
-            <GoAdmin/>
           </div>
         </div>
       </div>

@@ -22,6 +22,7 @@ const Join = () => {
                       <button type="submit" className="btn btn-primary btn-lg full-width">Submit</button>
                     </form>
                   </Link>
+                  <Link to={'/login'}><strong style={{color:"white"}}><u>admin login</u></strong></Link>
                 </div>
               </div>
             </div>

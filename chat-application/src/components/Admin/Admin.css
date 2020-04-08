@@ -27,7 +27,45 @@ h1 {
   padding-top: 0.5em;
 }
 
-#adminIcon{
+#adminIcon {
   font-size: 40px;
   margin-bottom: 1%;
+}
+
+#adminFooter {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  color: #0275d8;
+  text-align: center;
+  border-top: solid 1px white;
+  padding-top: 1%;
+  padding-bottom: .5%;
+}
+
+#adminLogoutBtn{
+  color: #e4e6eb !important;
+  text-transform: uppercase;
+  text-decoration: none;
+  /* background: #2979ff; */
+  background: none;
+  display: inline-block;
+  border: none;
+  outline: none;
+  margin: 0%  1% 1% 0%;
+  border-radius: 50%;
+}
+
+.logoutBtn{
+  position: fixed;  
+  right: 0;
+  margin-right: 1%;
+  border-radius: 10px;
+  color: white;
+  background-color: #0275d8;
+}
+
+.logoutBtn:hover{
+  background: #518ac4;
 }
