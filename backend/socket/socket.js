@@ -7,10 +7,10 @@ const joinMessages = [
   `just joined the room - glhf!`,
   "just joined. Everyone, look busy!",
   "just joined. Can I get a heal?",
-  'just landed.',
-  'just joined. Hide your bananas.',
-  'has spawned in the room.',
-  'just slid into the room.',
+  "just landed.",
+  "just joined. Hide your bananas.",
+  "has spawned in the room.",
+  "just slid into the room.",
   "has arrived. Party's over.",
 ];
 
@@ -23,23 +23,27 @@ module.exports = (io) => {
       users[socket.id].room = data.room;
 
       socket.join(users[socket.id].room);
-      // logs.logConnectToApp(users[socket.id].username, users[socket.id].room);
+      logs.logConnectToApp(users[socket.id].username, users[socket.id].room);
       io.to(users[socket.id].room).emit("chat-message", {
         username: "System",
-        message: `${users[socket.id].username} ${joinMessages[Math.floor(Math.random() * joinMessages.length)]}`,
+        message: `${users[socket.id].username} ${
+          joinMessages[Math.floor(Math.random() * joinMessages.length)]
+        }`,
         user: users[socket.id].username,
         roomname: users[socket.id].room,
       });
     });
 
     socket.on("join-room", (room) => {
-      // logs.logJoinRoom(users[socket.id].username, users[socket.id].room);
+      logs.logJoinRoom(users[socket.id].username, users[socket.id].room);
       users[socket.id].room = room;
       socket.join(room);
 
       io.to(room).emit("chat-message", {
         username: "System",
-        message: `${users[socket.id].username} ${joinMessages[Math.floor(Math.random() * joinMessages.length)]}`,
+        message: `${users[socket.id].username} ${
+          joinMessages[Math.floor(Math.random() * joinMessages.length)]
+        }`,
         user: users[socket.id].username,
         roomname: users[socket.id].room,
       });
@@ -48,7 +52,7 @@ module.exports = (io) => {
     });
 
     socket.on("leave-room", (room) => {
-      // logs.logLeftRoom(users[socket.id].username, users[socket.id].room);
+      logs.logLeftRoom(users[socket.id].username, users[socket.id].room);
       socket.leave(room);
       io.to(room).emit("chat-message", {
         username: "System",
@@ -59,7 +63,10 @@ module.exports = (io) => {
 
     socket.on("disconnect", () => {
       if (users[socket.id].room != null) {
-        // logs.logDisconnectToApp(users[socket.id].username, users[socket.id].room);
+        logs.logDisconnectToApp(
+          users[socket.id].username,
+          users[socket.id].room
+        );
         io.to(users[socket.id].room).emit("chat-message", {
           username: "System",
           message: `${users[socket.id].username} has disconnected.`,
@@ -74,11 +81,11 @@ module.exports = (io) => {
         username: username,
         message: message,
       });
-      // logs.logMessageSent(
-      //   users[socket.id].username,
-      //   users[socket.id].room,
-      //   message
-      // );
+      logs.logMessageSent(
+        users[socket.id].username,
+        users[socket.id].room,
+        message
+      );
     });
   });
 };

@@ -1,8 +1,8 @@
 import React from 'react';
 import { Tabs, Tab } from 'react-bootstrap';
-import  AdminEvents  from './events';
-import AdminMessage from './messages';
-import RoomAdd from './roomAdd';
+import  Events  from './events';
+import Messages from './messages';
+import Rooms from './rooms';
 
 import "./subcomponents.css";
 
@@ -17,13 +17,13 @@ class AdminTabs extends React.Component {
       <>
       <Tabs className="myTabs" defaultActiveKey="rooms" id="uncontrolled-tab-example">
         <Tab className="myTab" eventKey="eventHistory" title="Event History">
-          <AdminEvents/>
+          <Events/>
         </Tab>
         <Tab eventKey="messageHistory" title="Message History">
-          <AdminMessage/>
+          <Messages/>
         </Tab>
         <Tab eventKey="rooms" title="Rooms">
-          <RoomAdd/>
+          <Rooms/>
         </Tab>
       </Tabs>
       </> 

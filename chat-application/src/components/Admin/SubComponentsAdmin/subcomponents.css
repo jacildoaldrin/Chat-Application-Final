@@ -1,3 +1,43 @@
-/* .myTabs > li{
-color: yellow;
-} */
+.modal {
+  position: relative;
+  margin-top: 10%;
+}
+
+/* STYLE FOR TABLES */
+.mdb {
+  margin-top: 2%;
+  width: 90%;
+}
+
+.mdb .row:first-child {
+  width: 82%;
+  margin: auto;
+  padding-bottom: 1%;
+}
+
+.mdb .row:last-child {
+  width: 82%;
+  padding-top: 1%;
+  margin: auto;
+}
+
+.mdb .row:last-child .dataTables_paginate {
+  float: right;
+}
+
+.dataTables_filter {
+  float: right;
+}
+
+.mdb tbody + thead {
+  display: none;
+}
+
+.mdb thead {
+  font-size: large;
+}
+
+.tableContainer {
+  display: flex;
+  justify-content: center;
+}

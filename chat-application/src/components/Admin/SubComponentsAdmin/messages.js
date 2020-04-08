@@ -10,12 +10,13 @@ class AdminMessages extends React.Component {
     this.wrapper = React.createRef();
     this.state = {
       columns: [
-        { label: "Sender", field: "sender", width: 150 },
-        { label: "Room", field: "room", width: 150 },
-        { label: "Message", field: "messages", width: 150 },
-        { label: "Type", field: "type", width: 150 },
-        { label: "Date", field: "date", width: 150 },
-        { label: "Time", field: "time", width: 150 },
+        { label: "ID", field: "id", sort: "asc", width: 150 },
+        { label: "Date", field: "date", sort: "asc", width: 150 },
+        { label: "Time", field: "time", sort: "asc", width: 150 },
+        { label: "Sender", field: "sender", sort: "asc", width: 150 },
+        { label: "Room", field: "room", sort: "asc", width: 150 },
+        { label: "Message", field: "messages", sort: "asc", width: 150 },
+        { label: "Type", field: "type", sort: "asc", width: 150 },
       ],
       rows: [],
     };
@@ -30,20 +31,20 @@ class AdminMessages extends React.Component {
       this.setState({
         rows: res.data,
       });
+
       let newArr = [];
+
       for (let x in this.state.rows) {
-        let newObject = {};
-        newObject.sender = this.state.rows[x].sender;
-        newObject.room = this.state.rows[x].room;
-        newObject.messages = this.state.rows[x].message;
-        newObject.type = this.state.rows[x].type;
-        newObject.date = Moment(new Date(this.state.rows[x].date)).format(
-          "YYYY-MM-DD"
-        );
-        newObject.time = Moment(new Date(this.state.rows[x].date)).format(
-          "hh:mm:ss"
-        );
-        newArr.push(newObject);
+        let message = {
+          id: this.state.rows[x]._id,
+          date: Moment(new Date(this.state.rows[x].date)).format("MM/DD/YYYY"),
+          time: Moment(new Date(this.state.rows[x].date)).format("hh:mm:ss a"),
+          sender: this.state.rows[x].sender,
+          room: this.state.rows[x].room,
+          messages: this.state.rows[x].message,
+          type: this.state.rows[x].type,
+        };
+        newArr.push(message);
       }
       this.setState({
         rows: newArr,
@@ -53,10 +54,15 @@ class AdminMessages extends React.Component {
 
   render() {
     return (
-      <>
-        <br></br>
-        <MDBDataTable striped bordered small data={this.state}></MDBDataTable>
-      </>
+      <div className="tableContainer">
+        <MDBDataTable
+          striped
+          bordered
+          hover
+          data={this.state}
+          className="mdb"
+        />
+      </div>
     );
   }
 }
