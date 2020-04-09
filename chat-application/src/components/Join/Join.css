@@ -14,6 +14,13 @@
     z-index: 1;
 }
 
+.display-4{
+    margin-bottom: 15%;   
+}
+.px-2{
+    margin-bottom: 10%;
+}
+
 #btn{
     width: 100%;
 }

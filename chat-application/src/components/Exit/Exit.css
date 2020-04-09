@@ -1,0 +1,29 @@
+.exit-container{
+    display: flex;
+    border: none;
+    outline: none;
+  }
+
+.exit-button {
+    color: #e4e6eb !important;
+    text-transform: uppercase;
+    text-decoration: none;
+    display: inline-block;
+    font-size: large;
+    text-align: center;
+    width: 100%;
+    border: none;
+    outline: none;
+    padding-bottom: 4%;
+    padding-top: 4%;
+    position: absolute;
+    bottom: 0;
+    background: #2979ff;
+    border-radius: 0% 0% 10px 10px;
+
+  }
+  
+.exit-button:hover {
+    background: #3a3b3c;
+  }
+  

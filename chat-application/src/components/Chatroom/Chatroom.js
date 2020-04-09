@@ -12,14 +12,14 @@ import Chatbox from "../Chatbox/Chatbox";
 import Rooms from "../Rooms/Rooms";
 import Chatinfo from "../Chatinfo/Chatinfo";
 import Roomsinfo from "../Roomsinfo/Roomsinfo";
+import Exit from "../Exit/Exit";
 
 // for local
 // const port = process.env.port || 5000;
 // const endpoint = `http://localhost:${port}`;
 
-
 // heroku server
-const endpoint = 'https://chat-application-backend.herokuapp.com';
+const endpoint = "https://chat-application-backend.herokuapp.com";
 let socket;
 
 const Chatroom = ({ location }) => {
@@ -40,21 +40,21 @@ const Chatroom = ({ location }) => {
   }, [location.search]);
 
   // listens for event new-room
-  useEffect(()=>{
-    socket.on("new-room", room => {
+  useEffect(() => {
+    socket.on("new-room", (room) => {
       setRoom(room);
     });
-  }, [room])
+  }, [room]);
 
   // messages received
   useEffect(() => {
-    socket.on("chat-message", message => {
-      setMessages(messages => [...messages, message]);
+    socket.on("chat-message", (message) => {
+      setMessages((messages) => [...messages, message]);
     });
   }, []);
 
   // sends a message
-  const sendMessage = event => {
+  const sendMessage = (event) => {
     event.preventDefault();
     if (message) {
       socket.emit("send-message", message);
@@ -64,7 +64,7 @@ const Chatroom = ({ location }) => {
 
   // get all rooms from the database
   const getRooms = () => {
-    axios.get(`${endpoint}/room/room-list-active`).then(res => {
+    axios.get(`${endpoint}/room/room-list-active`).then((res) => {
       setRooms(res.data);
     });
   };
@@ -73,23 +73,34 @@ const Chatroom = ({ location }) => {
   const switchRoom = (event, newRoom) => {
     event.preventDefault();
     setMessages([]);
-    socket.emit('leave-room', room);
-    socket.emit('join-room', newRoom);
-  }
+    socket.emit("leave-room", room);
+    socket.emit("join-room", newRoom);
+  };
 
   return (
     <>
-      <div className="outerContainer">        
+      <div className="outerContainer">
         <div className="chatContainer">
           <Chatinfo username={username} room={room} />
           <Chatbox messages={messages} username={username} />
-          <Inputbox message={message} setMessage={setMessage} sendMessage={sendMessage}
+          <Inputbox
+            message={message}
+            setMessage={setMessage}
+            sendMessage={sendMessage}
           />
         </div>
         <div className="roomsContainer">
           <div className="roomList">
             <Roomsinfo />
-            <Rooms rooms={rooms} currentroom={room} username={username} switchRoom={switchRoom}/>
+            <div className="roomList-innerContainer">
+              <Rooms
+                rooms={rooms}
+                currentroom={room}
+                username={username}
+                switchRoom={switchRoom}
+              />
+              <Exit />
+            </div>
           </div>
         </div>
       </div>
