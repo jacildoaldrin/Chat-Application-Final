@@ -13,9 +13,13 @@ import Rooms from "../Rooms/Rooms";
 import Chatinfo from "../Chatinfo/Chatinfo";
 import Roomsinfo from "../Roomsinfo/Roomsinfo";
 
-const port = process.env.port || 5000;
-const endpoint = `http://localhost:${port}`;
+// for local
+// const port = process.env.port || 5000;
+// const endpoint = `http://localhost:${port}`;
 
+
+// heroku server
+const endpoint = 'https://chat-application-backend.herokuapp.com';
 let socket;
 
 const Chatroom = ({ location }) => {

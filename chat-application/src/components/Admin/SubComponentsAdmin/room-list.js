@@ -49,7 +49,7 @@ class Rooms extends React.Component {
   }
 
   fetchRooms() {
-    axios.get("http://localhost:5000/room/room-list").then((res) => {
+    axios.get("https://chat-application-backend.herokuapp.com/room/room-list").then((res) => {
       this.setState({
         myRooms: res.data,
       });
@@ -62,7 +62,7 @@ class Rooms extends React.Component {
     var dateStringify = date.toString();
     axios
       .put(
-        `http://localhost:5000/room/room-status-update/${roomId}`,
+        `https://chat-application-backend.herokuapp.com/room/room-status-update/${roomId}`,
         {
           roomname: roomName,
           edited: dateStringify,

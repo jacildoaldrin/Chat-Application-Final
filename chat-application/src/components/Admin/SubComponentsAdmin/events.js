@@ -26,7 +26,7 @@ class AdminEvents extends React.Component {
   }
 
   fetchEvents() {
-    axios.get("http://localhost:5000/event/event-history").then((res) => {
+    axios.get("https://chat-application-backend.herokuapp.com/event/event-history").then((res) => {
       this.setState({
         rows: res.data,
       });

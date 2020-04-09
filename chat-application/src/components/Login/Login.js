@@ -5,7 +5,9 @@ import axios from "axios";
 import "./Login.css";
 
 // const endpoint = `http://localhost:5000/user/login`; -> LOCAL ENDPOINT
-// const endpoint = 'https://chat-application-backend.herokuapp.com/';
+
+// heroku server
+const endpoint = 'https://chat-application-backend.herokuapp.com';
 
 const Login = () => {
   const [username, setUsername] = useState("");
@@ -15,7 +17,7 @@ const Login = () => {
   useEffect(() => {
     axios
       .post(
-        "http://localhost:5000/user/login",
+        `${endpoint}/user/login`,
         { username: username, password: password },
         {
           headers: {

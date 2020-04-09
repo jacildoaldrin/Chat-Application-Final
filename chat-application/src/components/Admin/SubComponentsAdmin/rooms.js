@@ -23,7 +23,7 @@ function RoomAdd() {
 
     axios
       .post(
-        "http://localhost:5000/room/create-room",
+        "https://chat-application-backend.herokuapp.com/room/create-room",
         {
           roomname: roomName,
           created: dateStringify,

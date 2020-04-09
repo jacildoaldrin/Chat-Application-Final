@@ -1,6 +1,6 @@
 import React from "react";
 import AdminTabs from "./SubComponentsAdmin/tabs";
-import { Link } from 'react-router-dom';
+import { Link } from "react-router-dom";
 import "./Admin.css";
 
 const Admin = () => {
