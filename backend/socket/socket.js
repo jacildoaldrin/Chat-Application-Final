@@ -1,7 +1,7 @@
 //Logs
 const logs = require("../functions/logs");
 
-const users = {};
+const users = [];
 
 const joinMessages = [
   `just joined the room - glhf!`,
@@ -16,74 +16,125 @@ const joinMessages = [
 
 module.exports = (io) => {
   io.on("connection", (socket) => {
-    users[socket.id] = { username: null, room: null };
+    users.push({id: socket.id, username: "", room: null});
 
-    socket.on("new-user", (data) => {
-      users[socket.id].username = data.username;
-      users[socket.id].room = data.room;
+    socket.on("new-user", (data, callback) => {
+      let userExist = users.find(
+        (user) => user.username.toLowerCase() === data.username.toLowerCase()
+      );
 
-      socket.join(users[socket.id].room);
-      logs.logConnectToApp(users[socket.id].username, users[socket.id].room);
-      io.to(users[socket.id].room).emit("chat-message", {
+      if (userExist) {
+        return callback({ error: "Username taken!!" });
+      }
+
+      //remove preset user created on connection
+      let index = users.findIndex(user => user.id === socket.id);
+      users.splice(index, 1)[0];
+
+      let user = {
+        id: socket.id,
+        username: data.username,
+        room: data.room
+      }
+
+      users.push(user);
+
+      // join room
+      socket.join(user.room);
+
+      // creating log
+      logs.logConnectToApp(user.username, user.room);
+
+      // emitting to room that user joined
+      io.to(user.room).emit("chat-message", {
         username: "System",
-        message: `${users[socket.id].username} ${
+        message: `${user.username} ${
           joinMessages[Math.floor(Math.random() * joinMessages.length)]
         }`,
-        user: users[socket.id].username,
-        roomname: users[socket.id].room,
+        user: user.username,
+        roomname: user.room,
       });
+
+      callback();
     });
 
     socket.on("join-room", (room) => {
-      logs.logJoinRoom(users[socket.id].username, users[socket.id].room);
-      users[socket.id].room = room;
-      socket.join(room);
+      // find existing user
+      let user = users.find(user => user.id === socket.id);
+      user.room = room;
 
-      io.to(room).emit("chat-message", {
+      // log event
+      logs.logJoinRoom(user.username, user.room);
+
+      // join room
+      socket.join(user.room);
+
+      // tells everyone in the room user joined
+      io.to(user.room).emit("chat-message", {
         username: "System",
-        message: `${users[socket.id].username} ${
+        message: `${user.username} ${
           joinMessages[Math.floor(Math.random() * joinMessages.length)]
         }`,
-        user: users[socket.id].username,
-        roomname: users[socket.id].room,
+        user: user.username,
+        roomname: user.room,
       });
 
-      io.to(users[socket.id].room).emit("new-room", users[socket.id].room);
+      io.to(user.room).emit("new-room", user.room);
     });
 
-    socket.on("leave-room", (room) => {
-      logs.logLeftRoom(users[socket.id].username, users[socket.id].room);
-      socket.leave(room);
-      io.to(room).emit("chat-message", {
+    socket.on("leave-room", () => {
+      // find existing user
+      let user = users.find(user => user.id === socket.id);
+
+      // log event
+      logs.logLeftRoom(user.username, user.room);
+
+      // leave room
+      socket.leave(user.room);
+
+      // tells everyone on the room that user left
+      io.to(user.room).emit("chat-message", {
         username: "System",
-        message: `${users[socket.id].username} has left the room.`,
-        user: users[socket.id].username,
+        message: `${user.username} has left the room.`,
+        user: user.username,
       });
     });
 
     socket.on("disconnect", () => {
-      if (users[socket.id].room != null) {
+      // find existing user's index
+      let index = users.findIndex(user => user.id === socket.id);
+
+      // find existing user
+      let user = users[index];
+      
+      if (user.room != null) {
         logs.logDisconnectToApp(
-          users[socket.id].username,
-          users[socket.id].room
+          user.username,
+          user.room
         );
-        io.to(users[socket.id].room).emit("chat-message", {
+        io.to(user.room).emit("chat-message", {
           username: "System",
-          message: `${users[socket.id].username} has disconnected.`,
+          message: `${user.username} has disconnected.`,
         });
       }
-      delete users[socket.id];
+      //removes user from the list of users
+      users.splice(index, 1)[0];
     });
 
     socket.on("send-message", (message) => {
-      const username = users[socket.id].username;
-      io.to(users[socket.id].room).emit("chat-message", {
-        username: username,
+      // find existing user
+      let user = users.find(user => user.id === socket.id);
+
+      // emit to room user joined
+      io.to(user.room).emit("chat-message", {
+        username: user.username,
         message: message,
       });
+
+      // log event
       logs.logMessageSent(
-        users[socket.id].username,
-        users[socket.id].room,
+        user.username,
+        user.room,
         message
       );
     });
