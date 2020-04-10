@@ -26,3 +26,11 @@
 .btn {
   width: 100%;
 }
+
+.error-message-false {
+  color: white;
+}
+
+.error-message-true{
+  color: red;
+}
