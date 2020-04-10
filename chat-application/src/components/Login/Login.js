@@ -7,12 +7,13 @@ import "./Login.css";
 // const endpoint = `http://localhost:5000/user/login`; -> LOCAL ENDPOINT
 
 // heroku server
-const endpoint = 'https://chat-application-backend.herokuapp.com';
+const endpoint = "https://chat-application-backend.herokuapp.com";
 
 const Login = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [condition, setCondition] = useState(Boolean);
+  const [error, setError] = useState(Boolean);
 
   useEffect(() => {
     axios
@@ -21,15 +22,20 @@ const Login = () => {
         { username: username, password: password },
         {
           headers: {
-            "Content-Type": "application/json"
-          }
+            "Content-Type": "application/json",
+          },
         }
       )
-      .then(res => {
-        //localStorage.setItem('token', res.data.token);
-        setCondition(res.data[0] != null)
+      .then((res) => {
+        setCondition(res.data[0] != null);
       });
   }, [username, password]);
+
+  console.log(error);
+
+  const userLogin = () => {
+    setError(!condition);
+  }
 
   return (
     <section id="loginCover" className="min-vh-100">
@@ -47,7 +53,7 @@ const Login = () => {
                           className="form-control"
                           type="text"
                           placeholder="Username"
-                          onChange={event => setUsername(event.target.value)}
+                          onChange={(event) => setUsername(event.target.value)}
                           required
                         />
                       </div>
@@ -56,20 +62,38 @@ const Login = () => {
                           className="form-control"
                           type="password"
                           placeholder="Password"
-                          onChange={event => setPassword(event.target.value)}
+                          onChange={(event) => setPassword(event.target.value)}
                           required
                         />
                       </div>
-                      <Link onClick={event => !condition?event.preventDefault():null} to={'/admin'}>
-                      <button
-                        type="submit"
-                        className="btn btn-primary btn-lg full-width"
+                      {error ? (
+                        <p className="error-message-true">
+                          {"incorrect credentials!"}
+                        </p>
+                      ) : (
+                        <p className="error-message-false">{"."}</p>
+                      )}
+
+                      <Link
+                        onClick={(event) =>
+                          !condition ? event.preventDefault() : null
+                        }
+                        to={"/admin"}
                       >
-                        Submit
-                      </button>
+                        <button
+                          type="submit"
+                          className="btn btn-primary btn-lg full-width"
+                          onClick={event => userLogin(event)}
+                        >
+                          Submit
+                        </button>
                       </Link>
                     </form>
-                    <Link to={'/'}><strong><u>back to main</u></strong></Link>
+                    <Link to={"/"}>
+                      <strong>
+                        <u>back to main</u>
+                      </strong>
+                    </Link>
                   </div>
                 </div>
               </div>
