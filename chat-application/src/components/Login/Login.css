@@ -17,7 +17,9 @@
 .formContainer {
     background-color: white;
     color: #000;
-    padding: 10%;
+    padding-left: 5%;
+    padding-right: 5%;
+    padding-bottom: 5%;
     border-radius: 2em;
 }
 

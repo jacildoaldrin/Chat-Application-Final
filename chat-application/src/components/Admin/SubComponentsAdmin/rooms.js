@@ -1,33 +1,93 @@
-import React, { useState } from "react";
-import { Modal, Button, Form } from "react-bootstrap";
+import React, { useState, useEffect } from "react";
+import { Button } from "react-bootstrap";
 import axios from "axios";
-import Rooms from "./room-list";
 
-function RoomAdd() {
-  const [show, setShow] = useState(false);
+// components
+import RoomAdd from "./RoomAdd";
+import RoomList from "./RoomList";
+
+const endpoint = "https://chat-application-backend.herokuapp.com";
+
+const Rooms = () => {
+  const [rooms, setRooms] = useState([]);
+
+  const [showAdd, setShowAdd] = useState(Boolean);
+  const [showEdit, setShowEdit] = useState(Boolean);
+
+  const [currId, setCurrId] = useState("");
   const [roomName, setRoomName] = useState("");
-  const [roomStatus, setRoomStatus] = useState("active");
-  const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
+  const [roomStatus, setRoomStatus] = useState("");
 
-  const handleChangeRoom = (event) => {
-    setRoomName(event.target.value);
+  // closes the modal
+  const closeAdd = () => {
+    setRoomName("");
+    setRoomStatus("active");
+    setShowAdd(false);
   };
-  const handleChangeStatus = (event) => {
-    setRoomStatus(event.target.value);
+  const closeEdit = () => {
+    setRoomName("");
+    setRoomStatus("active");
+    setShowEdit(false);
   };
-  const addRoom = () => {
-    //Get Current Date and Time
-    var date = Date(Date.now());
-    var dateStringify = date.toString();
 
+  // opens the modal
+  const openAdd = () => setShowAdd(true);
+  const openEdit = () => setShowEdit(true);
+
+  useEffect(() => {
+    setRoomStatus("active");
+    getRooms();
+  }, []);
+
+  // fetching all rooms
+  const getRooms = () => {
+    axios.get(`${endpoint}/room/room-list`).then((res) => {
+      setRooms(res.data);
+    });
+  };
+
+  // deleting room
+  const deleteRoom = (event, room) => {
+    event.preventDefault();
+    console.log(room);
+    axios.delete(`${endpoint}/room/remove-room/${room._id}`).then((res) => {
+      getRooms();
+    });
+  };
+
+  // adding new room
+  const addRoom = (event) => {
+    event.preventDefault();
+    let room = {
+      roomname: roomName,
+      created: new Date(),
+      edited: null,
+      status: roomStatus,
+    };
     axios
       .post(
-        "http://localhost:5000/room/create-room",
+        "https://chat-application-backend.herokuapp.com/room/create-room",
+        room,
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      )
+      .then((res) => {
+        closeAdd();
+        getRooms();
+      });
+  };
+
+  const editRoom = (event) => {
+    event.preventDefault();
+    axios
+      .put(
+        `https://chat-application-backend.herokuapp.com/room/room-status-update/${currId}`,
         {
           roomname: roomName,
-          created: dateStringify,
-          edited: null,
+          edited: new Date(),
           status: roomStatus,
         },
         {
@@ -37,57 +97,59 @@ function RoomAdd() {
         }
       )
       .then((res) => {
-        alert("A Room was created!");
-        handleClose();
-        window.location.reload();
+        closeEdit();
+        getRooms();
       });
+  };
+
+  const editModal = (event, room) => {
+    event.preventDefault();
+    setRoomName(room.roomname);
+    setRoomStatus(room.status);
+    setCurrId(room._id);
+    openEdit();
   };
 
   return (
     <div>
-      <div style={{ width: "10em", margin: "1em", marginTop: "2em", marginLeft: "3%"}}>
-        <Button variant="primary" onClick={handleShow}>
+      <div
+        style={{
+          width: "10em",
+          margin: "1em",
+          marginTop: "2em",
+          marginLeft: "3%",
+        }}
+      >
+        <Button variant="primary" onClick={openAdd}>
           Add Room
         </Button>
       </div>
       <div className="modal">
-        <Modal show={show} onHide={handleClose}>
-          <Modal.Header closeButton>
-            <Modal.Title>Add Room</Modal.Title>
-          </Modal.Header>
-          <Modal.Body>
-            <Form onSubmit={addRoom}>
-              <Form.Group controlId="roomName">
-                <Form.Label>Room Name</Form.Label>
-                <Form.Control
-                  onChange={handleChangeRoom}
-                  type="text"
-                  placeholder="Enter Room Here"
-                  required
-                />
-              </Form.Group>
-              <Form.Group controlId="roomStatus">
-                <Form.Label>Room Status</Form.Label>
-                <Form.Control
-                  as="select"
-                  value={roomStatus}
-                  onChange={handleChangeStatus}
-                >
-                  <option>active</option>
-                  <option>inactive</option>
-                </Form.Control>
-              </Form.Group>
-              <Button variant="primary" type="submit">
-                Submit
-              </Button>
-            </Form>
-          </Modal.Body>
-          <Modal.Footer></Modal.Footer>
-        </Modal>
+        <RoomAdd
+          showAdd={showAdd}
+          closeAdd={closeAdd}
+          addRoom={addRoom}
+          roomName={roomName}
+          setRoomName={setRoomName}
+          roomStatus={roomStatus}
+          setRoomStatus={setRoomStatus}
+        />
       </div>
-      <Rooms />
+
+      <RoomList
+        rooms={rooms}
+        closeEdit={closeEdit}
+        editRoom={editRoom}
+        showEdit={showEdit}
+        roomName={roomName}
+        roomStatus={roomStatus}
+        setRoomName={setRoomName}
+        setRoomStatus={setRoomStatus}
+        editModal={editModal}
+        deleteRoom={deleteRoom}
+      />
     </div>
   );
-}
+};
 
-export default RoomAdd;
+export default Rooms;

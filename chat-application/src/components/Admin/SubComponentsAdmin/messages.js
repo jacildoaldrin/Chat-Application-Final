@@ -27,7 +27,7 @@ class AdminMessages extends React.Component {
   }
 
   fetchEvents() {
-    axios.get("http://localhost:5000/message/message-history").then((res) => {
+    axios.get("https://chat-application-backend.herokuapp.com/message/message-history").then((res) => {
       this.setState({
         rows: res.data,
       });
