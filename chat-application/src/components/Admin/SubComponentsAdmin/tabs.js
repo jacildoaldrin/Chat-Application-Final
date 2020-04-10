@@ -2,8 +2,7 @@ import React from 'react';
 import { Tabs, Tab } from 'react-bootstrap';
 import  Events  from './events';
 import Messages from './messages';
-import Rooms from './Rooms';
-
+import Room from './Room';
 import "./subcomponents.css";
 
 class AdminTabs extends React.Component {
@@ -23,7 +22,7 @@ class AdminTabs extends React.Component {
           <Messages/>
         </Tab>
         <Tab eventKey="rooms" title="Rooms">
-          <Rooms/>
+          <Room/>
         </Tab>
       </Tabs>
       </> 

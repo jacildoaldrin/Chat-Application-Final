@@ -8,7 +8,7 @@ import RoomList from "./RoomList";
 
 const endpoint = "https://chat-application-backend.herokuapp.com";
 
-const Rooms = () => {
+const Room = () => {
   const [rooms, setRooms] = useState([]);
 
   const [showAdd, setShowAdd] = useState(Boolean);
@@ -17,7 +17,7 @@ const Rooms = () => {
   const [currId, setCurrId] = useState("");
   const [roomName, setRoomName] = useState("");
   const [roomStatus, setRoomStatus] = useState("");
-
+ 
   // closes the modal
   const closeAdd = () => {
     setRoomName("");
@@ -152,4 +152,4 @@ const Rooms = () => {
   );
 };
 
-export default Rooms;
+export default Room;
